@@ -1,6 +1,15 @@
-#' Load unprocessed followup submissions
-#' @param x Messy email.
-#' @return Clean email.
+#' Create a codebook for the provided data
+#'
+#' This function generates a codebook containing variable labels, types, and frequency distributions for the input data.
+#'
+#' @param data The dataset for which to create the codebook
+#' @return A data frame containing variable labels, types, and frequency distributions
+#'
+#' @examples
+#' create_codebook(mtcars)
+#'
+#' @import questionr tibble dplyr stringr
+#'
 #' @export
 create_codebook <- function(data) {
 

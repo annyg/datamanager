@@ -70,8 +70,18 @@ export_results_for_research <- function(
 
   # If write_as_stata is TRUE, export the data frame as a Stata file
   if (write_as_stata) {
-    rio::export(df, paste0(result_directory, result_file, "_stata.dta"))
+   # rio::export(df, paste0(result_directory, result_file, "_stata.dta"))
+    tryCatch(
+      {
+        rio::export(df, paste0(result_directory, result_file, "_stata.dta"))
+      },
+      error = function(e) {
+        warning("Error exporting Stata file:", e$message)
+      }
+    )
   }
+
+
 
   # Create metadata for the data frame ####
 
