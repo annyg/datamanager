@@ -24,6 +24,6 @@ prep_email <- function(x) {
         "yahou"="yahoo",
         "yaho"="yahoo")
     ))
-  print(email)
+  email
 }
 
