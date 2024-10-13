@@ -2,16 +2,19 @@
 % Please edit documentation in R/prep_email.R
 \name{prep_email}
 \alias{prep_email}
-\title{Load unprocessed followup submissions}
+\title{Preprocess email addresses for cleaning}
 \usage{
 prep_email(x)
 }
 \arguments{
-\item{x}{Messy email.}
+\item{x}{Character vector containing email addresses.}
 }
 \value{
-Clean email.
+A character vector with preprocessed email addresses.
 }
 \description{
-Load unprocessed followup submissions
+This function preprocesses email addresses for cleaning by replacing common mistakes with correct domain names and removing extra spaces.
+}
+\examples{
+prep_email("example@email.com")
 }

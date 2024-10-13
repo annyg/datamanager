@@ -73,7 +73,15 @@ export_results_for_research <- function(
    # rio::export(df, paste0(result_directory, result_file, "_stata.dta"))
     tryCatch(
       {
-        rio::export(df, paste0(result_directory, result_file, "_stata.dta"))
+        long_var_names <- names(df)[nchar(names(df)) > 32]
+        dropped_vars <- names(df)[nchar(names(df)) > 32]
+        df_stata_export <- df[, !(nchar(names(df)) > 32)]
+
+        warning(paste("Dropped variables longer than", 32, "characters:", paste(dropped_vars, collapse = ", ")))
+
+        return(list(data = data, message = dropped_vars))
+
+        rio::export(df_stata_export, paste0(result_directory, result_file, "_stata.dta"))
       },
       error = function(e) {
         warning("Error exporting Stata file:", e$message)

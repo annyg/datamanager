@@ -2,16 +2,28 @@
 % Please edit documentation in R/extract_participant_age.R
 \name{calc_age}
 \alias{calc_age}
-\title{Load unprocessed followup submissions}
+\title{Calculate age based on given social ID and reference date}
 \usage{
 calc_age(socID, refDate = Sys.Date(), unit = "year", cutoff_2000 = 22L)
 }
 \arguments{
-\item{x}{Messy email.}
+\item{socID}{The social ID of the individual}
+
+\item{refDate}{The reference date to calculate the age from (default is today)}
+
+\item{unit}{The unit in which to return the age ('year', 'month', 'week', or 'day')}
+
+\item{cutoff_2000}{The cutoff year for 2-digit years interpretation (default is 22)}
 }
 \value{
-Clean email.
+The age of the individual in the specified unit
 }
 \description{
-Load unprocessed followup submissions
+This function calculates the age of an individual based on their social ID and a reference date.
+The age can be returned in years, months, weeks, or days.
+}
+\examples{
+calc_age("01012012345", unit = "year")
+calc_age("01012012345", unit = "month", refDate = as.Date("2022-01-01"))
+
 }

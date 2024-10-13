@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_participant_birthdate.R
 \name{get_participant_birthdate}
 \alias{get_participant_birthdate}
-\title{Load unprocessed followup submissions}
+\title{Get participant birthdate based on social ID}
 \usage{
 get_participant_birthdate(
   socID,
@@ -12,11 +12,17 @@ get_participant_birthdate(
 )
 }
 \arguments{
-\item{x}{Messy email.}
+\item{socID}{Social ID of the participant}
+
+\item{refDate}{Reference date for calculations (default is current date)}
+
+\item{unit}{The unit of time to calculate the birthdate difference in (default is "year")}
+
+\item{cutoff_2000}{Cutoff year for two-digit year parsing (default is 22)}
 }
 \value{
-Clean email.
+A date object representing the participant's birthdate
 }
 \description{
-Load unprocessed followup submissions
+This function calculates the birthdate of a participant based on their social ID.
 }

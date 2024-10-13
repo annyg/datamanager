@@ -2,16 +2,21 @@
 % Please edit documentation in R/get_column_names.R
 \name{get_column_names}
 \alias{get_column_names}
-\title{Load unprocessed followup submissions}
+\title{Get column names from a data frame and calculate the length of each column name}
 \usage{
 get_column_names(data)
 }
 \arguments{
-\item{x}{Messy email.}
+\item{data}{A data frame containing the data}
 }
 \value{
-Clean email.
+A data frame with two columns: 'columns_names' (column names) and 'column_name_length' (string length of each column name)
 }
 \description{
-Load unprocessed followup submissions
+This function takes a data frame as input, retrieves the column names, renames the column, and calculates the length of each column name.
+}
+\examples{
+data <- data.frame(col1 = c(1, 2, 3), col2 = c("A", "B", "C"))
+get_column_names(data)
+
 }

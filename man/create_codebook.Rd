@@ -2,16 +2,20 @@
 % Please edit documentation in R/create_codebook.R
 \name{create_codebook}
 \alias{create_codebook}
-\title{Load unprocessed followup submissions}
+\title{Create a codebook for the provided data}
 \usage{
 create_codebook(data)
 }
 \arguments{
-\item{x}{Messy email.}
+\item{data}{The dataset for which to create the codebook}
 }
 \value{
-Clean email.
+A data frame containing variable labels, types, and frequency distributions
 }
 \description{
-Load unprocessed followup submissions
+This function generates a codebook containing variable labels, types, and frequency distributions for the input data.
+}
+\examples{
+create_codebook(mtcars)
+
 }

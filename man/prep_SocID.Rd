@@ -2,16 +2,19 @@
 % Please edit documentation in R/prep_SocID.R
 \name{prep_SocID}
 \alias{prep_SocID}
-\title{Load unprocessed followup submissions}
+\title{Corrects the Norwegian Social Identification (SocID) number by left-padding it with zeros to have a length of 11.}
 \usage{
 prep_SocID(SocID)
 }
 \arguments{
-\item{x}{Messy email.}
+\item{SocID}{A character representing the SocID to be corrected.}
 }
 \value{
-Clean email.
+A character string with the corrected SocID.
 }
 \description{
-Load unprocessed followup submissions
+Corrects the Norwegian Social Identification (SocID) number by left-padding it with zeros to have a length of 11.
+}
+\examples{
+prep_SocID("12345") # Returns "000000012345"
 }
