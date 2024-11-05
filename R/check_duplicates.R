@@ -1,17 +1,21 @@
-#' Check for duplicates in dataset
+#' Check for duplicates in a dataset based on specified groups
 #'
-#' This function checks for duplicates in a data frame. It allows you to specify the output formats and generate metadata such as codebooks and dictionaries.
+#' This function checks for duplicates in a dataset based on specified grouping variables.
 #'
-#' @param df The data frame to be processed.
-#' @param ... Variables to control for duplicates
-
-#' @return None
+#' @param data The input dataset to check for duplicates
+#' @param ... Unquoted variable names of the grouping variables
+#'
+#' @return A data frame with duplicates removed based on the specified grouping variables
 #'
 #' @examples
+#' check_duplicates(mtcars, cyl, gear)
 #'
+#' @import dplyr
+#'
+#' @export
 check_duplicates <- function(
-    data,
-    ...
+  data,
+  ...
 ) {
   groups_ <- enquos(...)
 

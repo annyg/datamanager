@@ -104,7 +104,7 @@ export_results_for_research <- function(
     # cols <- get_column_names(df)
 
     # Create a codebook using the koRonastudytools package
-    book <- koRonastudytools::create_codebook(df)
+    book <- datamanager::create_codebook(df)
 
     # Create a datatable from the codebook data frame with filtering and pagination options
     full_codebook_table <- datatable(book, filter = "top", options = list(pageLength = 20))
