@@ -1,6 +1,6 @@
 Package: datamanager
 Title: What the Package Does (Title Case)
-Version: 0.0.1
+Version: 0.0.2
 Authors@R: c(
     person("Anders", "Nygaard", , "andersinthis@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-1922-0751")),
@@ -14,3 +14,11 @@ Encoding: UTF-8
 Language: EN
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
+Imports: 
+    codebookr,
+    dplyr,
+    DT,
+    haven,
+    labelled,
+    rio,
+    webshot
