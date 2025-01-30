@@ -1,6 +1,6 @@
 Package: datamanager
 Title: What the Package Does (Title Case)
-Version: 0.0.2
+Version: 0.1.0
 Authors@R: c(
     person("Anders", "Nygaard", , "andersinthis@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-1922-0751")),
@@ -19,6 +19,7 @@ Imports:
     dplyr,
     DT,
     haven,
+    htmlwidgets,
     labelled,
     rio,
     webshot

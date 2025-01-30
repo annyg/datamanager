@@ -6,6 +6,7 @@
 \usage{
 export_results_for_research(
   df,
+  results_directory_location,
   results_directory = "results",
   results_filename = "results",
   results_date = Sys.Date(),
@@ -23,7 +24,7 @@ export_results_for_research(
 \arguments{
 \item{df}{The data frame to be processed.}
 
-\item{results_directory}{The path and name of the results directory (optional, default is "results").}
+\item{results_directory}{The name of the results directory (optional, default is "results").}
 
 \item{results_filename}{The name of the results file (optional, default is "results").}
 

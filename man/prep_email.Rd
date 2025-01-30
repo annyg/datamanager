@@ -2,19 +2,35 @@
 % Please edit documentation in R/prep_email.R
 \name{prep_email}
 \alias{prep_email}
-\title{Preprocess email addresses for cleaning}
+\title{Preprocess and Clean Email Addresses}
 \usage{
-prep_email(x)
+prep_email(email, remove_spaces = TRUE, lowercase = TRUE, fix_spelling = FALSE)
 }
 \arguments{
-\item{x}{Character vector containing email addresses.}
+\item{email}{A character vector containing email addresses to be processed.}
+
+\item{remove_spaces}{Logical, default is \code{TRUE}. If \code{TRUE}, extraneous spaces within the email will be removed.}
+
+\item{lowercase}{Logical, default is \code{TRUE}. If \code{TRUE}, converts the entire email address to lowercase.}
+
+\item{fix_spelling}{Logical, default is \code{FALSE}. If \code{TRUE}, corrects common misspellings in domain names and handles some punctuation issues.
+
+Common corrections include:
+\itemize{
+\item Replacing \code{gamil}, \code{gmal} with \code{gmail}
+\item Replacing \code{yaoo}, \code{yahou}, \code{yahooo} with \code{yahoo}
+\item Replacing \code{hotnail}, \code{homail}, \code{hotmial} with \code{hotmail}
+\item Fixing \code{.vom} to \code{.com} and addressing double periods
+}}
 }
 \value{
-A character vector with preprocessed email addresses.
+A character vector with preprocessed and cleaned email addresses.
 }
 \description{
-This function preprocesses email addresses for cleaning by replacing common mistakes with correct domain names and removing extra spaces.
+This function preprocesses email addresses by cleaning and correcting them. It removes extra spaces, converts text to lowercase, and fixes common spelling errors typically found in domain names.
 }
 \examples{
-prep_email("example@email.com")
+prep_email(" Example.email @gamil.com ", TRUE, TRUE, TRUE)
+prep_email("user@homail.com", fix_spelling = TRUE)
+
 }

@@ -2,18 +2,22 @@
 % Please edit documentation in R/check_duplicates.R
 \name{check_duplicates}
 \alias{check_duplicates}
-\title{Check for duplicates in dataset}
+\title{Check for duplicates in a dataset based on specified groups}
 \usage{
 check_duplicates(data, ...)
 }
 \arguments{
-\item{...}{Variables to control for duplicates}
+\item{data}{The input dataset to check for duplicates}
 
-\item{df}{The data frame to be processed.}
+\item{...}{Unquoted variable names of the grouping variables}
 }
 \value{
-None
+A data frame with duplicates removed based on the specified grouping variables
 }
 \description{
-This function checks for duplicates in a data frame. It allows you to specify the output formats and generate metadata such as codebooks and dictionaries.
+This function checks for duplicates in a dataset based on specified grouping variables.
+}
+\examples{
+check_duplicates(mtcars, cyl, gear)
+
 }

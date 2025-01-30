@@ -3,7 +3,8 @@
 #' This function exports the results of a data frame and labelled data for research purposes. It allows you to specify the output formats and generate metadata such as codebooks and dictionaries.
 #'
 #' @param df The data frame to be processed.
-#' @param results_directory The path and name of the results directory (optional, default is "results").
+#' @param results_directory The path of the results directory (optional, default is here (current directory)).
+#' @param results_directory The name of the results directory (optional, default is "results").
 #' @param results_filename The name of the results file (optional, default is "results").
 #' @param results_date The date to be appended to the directory and file names (optional, default is Sys.Date()).
 #' @param write_as_csv A logical indicating whether to write the results as a CSV file (optional, default is TRUE).
@@ -24,6 +25,7 @@
 #'
 export_results_for_research <- function(
     df,
+    results_directory_location,
     results_directory = "results",
     results_filename = "results",
     results_date = Sys.Date(),
@@ -50,27 +52,27 @@ export_results_for_research <- function(
   # Write the results to the specified formats ####
   # If write_as_csv is TRUE, export the data frame as a CSV file
   if (write_as_csv) {
-    rio::export(df, paste0(result_directory, result_file, ".csv"))
+    rio::export(df, paste0(results_directory_location, result_directory, result_file, ".csv"))
   }
 
   # If write_as_excel is TRUE, export the data frame as an Excel file
   if (write_as_excel) {
-    rio::export(df, paste0(result_directory, result_file, "_excel.xlsx"))
+    rio::export(df, paste0(results_directory_location, result_directory, result_file, "_excel.xlsx"))
   }
 
   # If write_as_spss is TRUE, export the data frame as an SPSS file
   if (write_as_spss) {
-    rio::export(df, paste0(result_directory, result_file, "_spss.sav"))
+    rio::export(df, paste0(results_directory_location, result_directory, result_file, "_spss.sav"))
   }
 
   # If write_as_qs is TRUE, export the data frame as a QS file
   if (write_as_qs) {
-    rio::export(df, paste0(result_directory, result_file, "_qs.qs"))
+    rio::export(df, paste0(results_directory_location, result_directory, result_file, "_qs.qs"))
   }
 
   # If write_as_stata is TRUE, export the data frame as a Stata file
   if (write_as_stata) {
-   # rio::export(df, paste0(result_directory, result_file, "_stata.dta"))
+   # rio::export(df, paste0(results_directory_location, result_directory, result_file, "_stata.dta"))
     tryCatch(
       {
         long_var_names <- names(df)[nchar(names(df)) > 32]
@@ -81,7 +83,7 @@ export_results_for_research <- function(
 
         return(list(data = data, message = dropped_vars))
 
-        rio::export(df_stata_export, paste0(result_directory, result_file, "_stata.dta"))
+        rio::export(df_stata_export, paste0(results_directory_location, result_directory, result_file, "_stata.dta"))
       },
       error = function(e) {
         warning("Error exporting Stata file:", e$message)
@@ -107,10 +109,10 @@ export_results_for_research <- function(
     book <- datamanager::create_codebook(df)
 
     # Create a datatable from the codebook data frame with filtering and pagination options
-    full_codebook_table <- datatable(book, filter = "top", options = list(pageLength = 20))
+    full_codebook_table <- DT::datatable(book, filter = "top", options = list(pageLength = 20))
 
     # Save the datatable as an HTML widget in the result_directory
-    htmlwidgets::saveWidget(full_codebook_table, paste0(result_directory, "html_codebook_", result_file, ".html"))
+    htmlwidgets::saveWidget(full_codebook_table, paste0(results_directory_location, result_directory, "html_codebook_", result_file, ".html"))
   }
 
   ## Generate a word document codebook ####
@@ -119,7 +121,7 @@ export_results_for_research <- function(
     bookr <- codebookr::codebook(df)
 
     # Print the codebook document and save it as a Word document in the result_directory
-    print(bookr, paste0(result_directory, "codebook_", result_file, ".docx"))
+    print(bookr, paste0(results_directory_location, result_directory, "codebook_", result_file, ".docx"))
   }
 
   ## Generate a data dictionary ####
@@ -128,6 +130,6 @@ export_results_for_research <- function(
     dictionary <- labelled::generate_dictionary(df)
 
     # Export the dictionary as an Excel file in the result_directory
-    rio::export(dictionary, paste0(result_directory, "dictionary_", result_file, ".xlsx"))
+    rio::export(dictionary, paste0(results_directory_location, result_directory, "dictionary_", result_file, ".xlsx"))
   }
 }
