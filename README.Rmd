@@ -37,7 +37,7 @@ knitr::opts_chunk$set(
 
 You can install the latest version of `datamanager` directly from GitHub using:
 
-```{r, eval=TRUE}
+```{r, message=FALSE}
 if (!require("pak")) install.packages("pak")
 pak::pak("annyg/datamanager")
 library(datamanager)
@@ -49,7 +49,7 @@ The `datamanager` package is designed to handle data frames and primarily builds
 
 ### Data Management
 
-```{r echo=FALSE, eval=TRUE}
+```{r message=FALSE}
 library(datamanager)
 library(dplyr)
 
