@@ -7,7 +7,7 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.xxxxxxx.svg)](https://doi.org/10.5281/zenodo.xxxxxxx)
 [![codecov](https://codecov.io/gh/annyg/datamanager/branch/main/graph/badge.svg)](https://codecov.io/gh/annyg/datamanager)
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![License:GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-green.svg)
 
 <!-- badges: end -->
 
@@ -46,12 +46,9 @@ how to use the main functions in `datamanager`.
 ### Data Management
 
 ``` r
-library(datamanager)
-library(dplyr)
-#> Warning: package 'dplyr' was built under R version 4.4.2
+#library(datamanager)
 
 # Example function call for cleaning common typos often found in email adresses
-
 # cleaned_df <- df %>%
 #   mutate(clean_emails = datamanager::prep_email(messy_emails))
 ```
@@ -111,8 +108,8 @@ please fork the repository, create a branch, and submit a pull request.
 
 ## License
 
-`datamanager` is licensed under the MIT License. See the `LICENSE` file
-for more information. \#FIXME
+`datamanager` is licensed under the GNU General Public License v3.0. See
+the `LICENSE` file for more information.
 
 ------------------------------------------------------------------------
 

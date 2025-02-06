@@ -11,8 +11,7 @@ Description: datamanager is an R package designed for the efficient management
     survey data. It provides a suite of functions to handle common tasks in data 
     preparation and scoring, including support for instruments such as RAND-12 
     and EMQ.
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+License: GPL (>= 3)
 Encoding: UTF-8
 Language: EN
 Roxygen: list(markdown = TRUE)
