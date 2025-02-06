@@ -4,9 +4,7 @@
 # datamanager
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.xxxxxxx.svg)](https://doi.org/10.5281/zenodo.xxxxxxx)
-![CRAN
-Downloads](https://cranlogs.r-pkg.org/badges/grand-total/datamanager)
-[![codecov](https://codecov.io/gh/yourusername/datamanager/branch/main/graph/badge.svg)](https://codecov.io/gh/yourusername/datamanager)
+[![codecov](https://codecov.io/gh/annyg/datamanager/branch/main/graph/badge.svg)](https://codecov.io/gh/annyg/datamanager)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
 `datamanager` is an R package designed for the efficient management and
