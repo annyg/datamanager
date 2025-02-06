@@ -3,11 +3,13 @@
 
 # datamanager
 
+<!-- badges: start -->
+
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.xxxxxxx.svg)](https://doi.org/10.5281/zenodo.xxxxxxx)
-![CRAN
-Downloads](https://cranlogs.r-pkg.org/badges/grand-total/datamanager)
-[![codecov](https://codecov.io/gh/yourusername/datamanager/branch/main/graph/badge.svg)](https://codecov.io/gh/yourusername/datamanager)
+[![codecov](https://codecov.io/gh/annyg/datamanager/branch/main/graph/badge.svg)](https://codecov.io/gh/annyg/datamanager)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
+
+<!-- badges: end -->
 
 `datamanager` is an R package designed for the efficient management and
 scoring of research data, particularly focusing on questionnaire and
@@ -27,29 +29,36 @@ RAND-12 and EMQ.
 ## Installation
 
 You can install the latest version of `datamanager` directly from GitHub
-using the `devtools` package:
+using:
 
 ``` r
-# Install devtools if you haven't already
-install.packages("devtools")
-
-# Install datamanager from GitHub
-devtools::install_github("annyg/datamanager")
+if (!require("pak")) install.packages("pak")
+#> Loading required package: pak
+pak::pak("annyg/datamanager")
+#> ℹ Loading metadata database
+#> ✔ Loading metadata database ... done
+#>  
+#> ℹ No downloads are needed
+#> ✔ 1 pkg + 91 deps: kept 60 [9s]
+library(datamanager)
 ```
 
 ## Usage
 
-Below are some examples demonstrating how to use the main functions in
-`datamanager`.
+The `datamanager` package is designed to handle data frames and
+primarily builds on tidyverse syntax. Below are examples demonstrating
+how to use the main functions in `datamanager`.
 
 ### Data Management
 
-``` r
-library(datamanager)
-
-# Example function call for cleaning data
-cleaned_data <- clean_survey_data(raw_data)
-```
+    #> 
+    #> Attaching package: 'dplyr'
+    #> The following objects are masked from 'package:stats':
+    #> 
+    #>     filter, lag
+    #> The following objects are masked from 'package:base':
+    #> 
+    #>     intersect, setdiff, setequal, union
 
 ### Scoring Instruments
 
@@ -57,14 +66,14 @@ cleaned_data <- clean_survey_data(raw_data)
 
 ``` r
 # Example for scoring RAND-12
-rand12_scores <- score_rand12(cleaned_data)
+# rand12_scores <- score_rand12(cleaned_data)
 ```
 
 #### EMQ Scoring
 
 ``` r
 # Example for scoring EMQ
-emq_scores <- score_emq(cleaned_data)
+# emq_scores <- score_emq(cleaned_data)
 ```
 
 For detailed documentation on these functions and more, please refer to
@@ -91,6 +100,13 @@ Example BibTeX entry:
   url          = {https://github.com/annyg/datamanager}
 }
 ```
+
+## Lifecycle
+
+This package is currently an experimental, as defined by the [RECON
+software lifecycle](https://www.reconverse.org/lifecycle.html). This
+means that it is functional, but interfaces and functionalities may
+change over time, testing and documentation may be lacking.
 
 ## Contributing
 
