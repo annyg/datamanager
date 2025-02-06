@@ -5,7 +5,7 @@
 
 <!-- badges: start -->
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.xxxxxxx.svg)](https://doi.org/10.5281/zenodo.xxxxxxx)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14825940%20.svg)](https://doi.org/10.5281/zenodo.14825940)
 [![codecov](https://codecov.io/gh/annyg/datamanager/branch/main/graph/badge.svg)](https://codecov.io/gh/annyg/datamanager)
 ![License:GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-green.svg)
 
@@ -76,7 +76,7 @@ the package help files or vignette.
 
 If you use `datamanager` in your research, please cite it as follows:
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.xxxxxxx.svg)](https://doi.org/10.5281/zenodo.xxxxxxx)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14825940%20.svg)](https://doi.org/10.5281/zenodo.14825940)
 
 Example BibTeX entry:
 
@@ -84,12 +84,11 @@ Example BibTeX entry:
 @software{Anders B. Nygaard_2023_XXXXXXX,
   author       = {Anders B. Nygaard},
   title        = {datamanager: Tools for Questionnaire and Survey Data Management},
-  month        = month,
-  year         = 2023,
+  year         = {2025},
   publisher    = {GitHub},
   journal      = {GitHub repository},
   version      = {v1.0.0},
-  doi          = {10.5281/zenodo.xxxxxxx},
+  doi          = {10.5281/zenodo.14825940},
   url          = {https://github.com/annyg/datamanager}
 }
 ```
