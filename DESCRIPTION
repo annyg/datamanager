@@ -1,13 +1,16 @@
 Package: datamanager
-Title: What the Package Does (Title Case)
+Title: Efficient Management and Scoring of Research Data
 Version: 0.1.0
 Authors@R: c(
     person("Anders", "Nygaard", , "andersinthis@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-1922-0751")),
     person("ANYthings", role = "cph")
   )
-Description: More about what it does (maybe more than one line) Use four
-    spaces when indenting paragraphs within the Description.
+Description: datamanager is an R package designed for the efficient management 
+    and scoring of research data, particularly focusing on questionnaire and 
+    survey data. It provides a suite of functions to handle common tasks in data 
+    preparation and scoring, including support for instruments such as RAND-12 
+    and EMQ.
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8
