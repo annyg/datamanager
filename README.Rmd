@@ -54,6 +54,7 @@ library(datamanager)
 library(dplyr)
 
 # Example function call for cleaning common typos often found in email adresses
+
 # cleaned_df <- df %>%
 #   mutate(clean_emails = datamanager::prep_email(messy_emails))
 ```
