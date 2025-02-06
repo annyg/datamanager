@@ -38,9 +38,17 @@ knitr::opts_chunk$set(
 You can install the latest version of `datamanager` directly from GitHub using:
 
 ```{r}
+<<<<<<< HEAD
 if (!require("pak")) install.packages("pak")
 pak::pak("annyg/datamanager")
 library(datamanager)
+=======
+# Install devtools if you haven't already
+install.packages("devtools")
+
+# Install datamanager from GitHub
+devtools::install_github("annyg/datamanager")
+>>>>>>> 293f4344aeab8785092f972c96126a66b34b9b01
 ```
 
 ## Usage
@@ -54,8 +62,13 @@ library(datamanager)
 library(dplyr)
 
 # Example function call for cleaning common typos often found in email adresses
+<<<<<<< HEAD
 # cleaned_df <- df %>%
 #   mutate(clean_emails = datamanager::prep_email(messy_emails))
+=======
+cleaned_df <- df %>%
+  mutate(clean_emails = datamanager::prep_email(messy_emails))
+>>>>>>> 293f4344aeab8785092f972c96126a66b34b9b01
 ```
 
 ### Scoring Instruments
