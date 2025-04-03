@@ -33,9 +33,9 @@ create_codebook <- function(data) {
            value_n = paste(value, n, sep = ": ")) %>%
     select(varname, value_n, npos) %>%
     spread(npos, value_n) %>%
-    # mutate(across(.cols = everything(-varname),
-    #               ~(ifelse(is.na(.), "", .)))) %>% # NEW
-    mutate_at(vars(-varname), funs(ifelse(is.na(.), "", .))) %>% # OLD
+    mutate_at(across(.cols = -varname,
+                  ~(ifelse(is.na(.), "", .)))) %>% # NEW
+    # mutate_at(vars(-varname), funs(ifelse(is.na(.), "", .))) %>% # OLD
     unite("valfreqs", c(2:ncol(.)), sep = "\n") %>%
     mutate(valfreqs = sub("\\s+$", "", valfreqs))
 
