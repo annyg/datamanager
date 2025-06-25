@@ -25,3 +25,5 @@ Imports:
     labelled,
     rio,
     webshot
+Depends: 
+    R (>= 3.5)
