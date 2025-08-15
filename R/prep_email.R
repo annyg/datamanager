@@ -25,22 +25,22 @@ prep_email <- function(email, remove_spaces = TRUE, lowercase = TRUE, fix_spelli
   corrections <- c(
     # Spacing and punctuation fixes
     # " "="",
-    "\\("="",
-    "\\)"="",
+    "\\(" = "",
+    "\\)" = "",
     # Common domain misspellin corrections
-    "gamil"="gmail",
-    "gmal"="gmail",
-    "yaoo"="yahoo",
-    "yahou"="yahoo",
-    "yahooo"="yahoo",
-    "hotnail"="hotmail",
-    "homail"="hotmail",
-    "hotmial"="hotmail",
+    "gamil" = "gmail",
+    "gmal" = "gmail",
+    "yaoo" = "yahoo",
+    "yahou" = "yahoo",
+    "yahooo" = "yahoo",
+    "hotnail" = "hotmail",
+    "homail" = "hotmail",
+    "hotmial" = "hotmail",
     # Ensure domain endings are correctly formatted
-    ".vom"=".com",
-    "mailcom"="mail.com",
+    ".vom" = ".com",
+    "mailcom" = "mail.com",
     # Finally, manage double periods, this should be last to catch any introduced by earlier replacements
-    "\\.\\."="."
+    "\\.\\." = "."
 
     # "\\("="",
     # "\\)"="",
@@ -63,7 +63,9 @@ prep_email <- function(email, remove_spaces = TRUE, lowercase = TRUE, fix_spelli
 
   # Remove spaces condition
   if (remove_spaces) {
-    email <- email %>% str_squish() %>% str_replace_all(c(" "=""))
+    email <- email %>%
+      str_squish() %>%
+      str_replace_all(c(" " = ""))
   }
 
   # Convert to lowercase condition
