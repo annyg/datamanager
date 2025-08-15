@@ -62,7 +62,7 @@ how to use the main functions in `datamanager`.
 ### Data Management
 
 ```{r message=FALSE}
-#library(datamanager)
+# library(datamanager)
 
 # Example function call for cleaning common typos often found in email adresses
 # cleaned_df <- df %>%

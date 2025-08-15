@@ -20,4 +20,3 @@ drop_long_variables <- function(data, variable_length = 32) {
 
   return(list(data = data, message = dropped_vars))
 }
-

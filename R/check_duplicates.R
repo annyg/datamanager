@@ -14,9 +14,8 @@
 #'
 #' @export
 check_duplicates <- function(
-  data,
-  ...
-) {
+    data,
+    ...) {
   groups_ <- enquos(...)
 
   data <- data %>%

@@ -69,8 +69,7 @@ check_email_syntax <- function(
     return = c("flag", "reason", "corrected", "log"),
     remove_spaces = TRUE,
     lowercase = TRUE,
-    fix_spelling = TRUE
-) {
+    fix_spelling = TRUE) {
   return <- match.arg(return)
 
   # --- Corrections (anchored to domain or end-of-string) ---
@@ -81,57 +80,57 @@ check_email_syntax <- function(
     "\\.\\." = ".",
 
     # Gmail
-    "(?<=@)gamil(?=\\.|$)"   = "gmail",
-    "(?<=@)gmal(?=\\.|$)"    = "gmail",
-    "(?<=@)gmial(?=\\.|$)"   = "gmail",
-    "(?<=@)gnail(?=\\.|$)"   = "gmail",
-    "(?<=@)gmaill(?=\\.|$)"  = "gmail",
+    "(?<=@)gamil(?=\\.|$)" = "gmail",
+    "(?<=@)gmal(?=\\.|$)" = "gmail",
+    "(?<=@)gmial(?=\\.|$)" = "gmail",
+    "(?<=@)gnail(?=\\.|$)" = "gmail",
+    "(?<=@)gmaill(?=\\.|$)" = "gmail",
 
     # Yahoo
-    "(?<=@)yaoo(?=\\.|$)"    = "yahoo",
-    "(?<=@)yahou(?=\\.|$)"   = "yahoo",
-    "(?<=@)yahooo(?=\\.|$)"  = "yahoo",
-    "(?<=@)yahho(?=\\.|$)"   = "yahoo",
-    "(?<=@)yhoo(?=\\.|$)"    = "yahoo",
+    "(?<=@)yaoo(?=\\.|$)" = "yahoo",
+    "(?<=@)yahou(?=\\.|$)" = "yahoo",
+    "(?<=@)yahooo(?=\\.|$)" = "yahoo",
+    "(?<=@)yahho(?=\\.|$)" = "yahoo",
+    "(?<=@)yhoo(?=\\.|$)" = "yahoo",
 
     # Hotmail
     "(?<=@)hotnail(?=\\.|$)" = "hotmail",
-    "(?<=@)hotmai(?=\\.|$)"  = "hotmail",
-    "(?<=@)hotmal(?=\\.|$)"  = "hotmail",
+    "(?<=@)hotmai(?=\\.|$)" = "hotmail",
+    "(?<=@)hotmal(?=\\.|$)" = "hotmail",
     "(?<=@)hotmial(?=\\.|$)" = "hotmail",
-    "(?<=@)homail(?=\\.|$)"  = "hotmail",
+    "(?<=@)homail(?=\\.|$)" = "hotmail",
 
     # Outlook
-    "(?<=@)outlok(?=\\.|$)"  = "outlook",
-    "(?<=@)outloo(?=\\.|$)"  = "outlook",
+    "(?<=@)outlok(?=\\.|$)" = "outlook",
+    "(?<=@)outloo(?=\\.|$)" = "outlook",
     "(?<=@)outllok(?=\\.|$)" = "outlook",
 
     # Mail.com (full domain)
-    "(?<=@)mailcom$"         = "mail.com",
+    "(?<=@)mailcom$" = "mail.com",
 
     # Fix double @
-    "@{2,}" = "@",  # collapse double (or more) '@' to a single '@'
+    "@{2,}" = "@", # collapse double (or more) '@' to a single '@'
 
     # Add .com when major provider domain lacks TLD
-    "(?<=@)gmail$"   = "gmail.com",
-    "(?<=@)yahoo$"   = "yahoo.com",
+    "(?<=@)gmail$" = "gmail.com",
+    "(?<=@)yahoo$" = "yahoo.com",
     "(?<=@)outlook$" = "outlook.com",
     "(?<=@)hotmail$" = "hotmail.com",
 
     # TLD fixes
-    "\\.vom$"   = ".com",
-    "\\.coom$"  = ".com",
-    "\\.cim$"   = ".com",
-    "\\.cmo$"   = ".com",
-    "\\.comm$"  = ".com",
-    "\\.comn$"  = ".com",
-    "\\.noo$"   = ".no",
-    "\\.nno$"   = ".no",
-    "\\.ogr$"   = ".org",
-    "\\.og$"    = ".org",
-    ",com$"     = ".com",
-    ",no$"      = ".no",
-    ",org$"     = ".org"
+    "\\.vom$" = ".com",
+    "\\.coom$" = ".com",
+    "\\.cim$" = ".com",
+    "\\.cmo$" = ".com",
+    "\\.comm$" = ".com",
+    "\\.comn$" = ".com",
+    "\\.noo$" = ".no",
+    "\\.nno$" = ".no",
+    "\\.ogr$" = ".org",
+    "\\.og$" = ".org",
+    ",com$" = ".com",
+    ",no$" = ".no",
+    ",org$" = ".org"
   )
 
   # --- Pre-correction typo detection ---
@@ -154,9 +153,9 @@ check_email_syntax <- function(
 
   # -------- PRE-CORRECTION checks --------
   orig <- email_vec
-  has_whitespace      <- str_detect(orig, "\\s")
-  has_double_at       <- str_detect(orig, "@.*@")
-  invalid_format_pre  <- !str_detect(orig, basic_regex)
+  has_whitespace <- str_detect(orig, "\\s")
+  has_double_at <- str_detect(orig, "@.*@")
+  invalid_format_pre <- !str_detect(orig, basic_regex)
 
   domain_pre <- ifelse(
     str_detect(orig, "@"),
@@ -172,10 +171,10 @@ check_email_syntax <- function(
     list(has_whitespace, has_double_at, gmail_typo_pre, other_typo_pre, invalid_format_pre, missing_tld_major),
     function(ws, dbl, gtypo, otypo, inv_pre, missing_major) {
       r <- character(0)
-      if (ws)    r <- c(r, "has_whitespace")
-      if (dbl)   r <- c(r, "has_double_at")
+      if (ws) r <- c(r, "has_whitespace")
+      if (dbl) r <- c(r, "has_double_at")
       if (gtypo) r <- c(r, "gmail_typo")
-      if (otyo)  r <- c(r, "other_domain_typo")
+      if (otyo) r <- c(r, "other_domain_typo")
 
       # Suppress "invalid_format_pre" when the ONLY problem is a missing TLD on a major provider
       only_missing_tld <- missing_major &&
@@ -204,7 +203,7 @@ check_email_syntax <- function(
   # -------- CORRECTION pipeline --------
   corrected <- orig
   if (remove_spaces) corrected <- str_replace_all(corrected, " ", "")
-  if (lowercase)     corrected <- str_to_lower(corrected)
+  if (lowercase) corrected <- str_to_lower(corrected)
 
   log_vec <- rep("", length(orig))
 

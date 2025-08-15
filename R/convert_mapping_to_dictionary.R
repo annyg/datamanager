@@ -49,7 +49,7 @@ convert_mapping_to_dataframe <- function(mapping_text) {
   result_df <- data.frame(
     Variable = variables,
     Label = labels,
-    Value_Label = c(value_labels, rep(NA, length(variables) - length(value_labels))),  # Fill NA for non-value rows
+    Value_Label = c(value_labels, rep(NA, length(variables) - length(value_labels))), # Fill NA for non-value rows
     stringsAsFactors = FALSE
   )
 

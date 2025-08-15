@@ -17,5 +17,5 @@
 #'
 get_participant_birthdate <- function(socID, refDate = Sys.Date(), unit = "year", cutoff_2000 = 22L) {
   require(lubridate)
-  birthDate <- parse_date_time2(str_sub(str_pad(socID, 11, "left", pad = 0), 0 ,6), "dmy", cutoff_2000 = cutoff_2000)
+  birthDate <- parse_date_time2(str_sub(str_pad(socID, 11, "left", pad = 0), 0, 6), "dmy", cutoff_2000 = cutoff_2000)
 }

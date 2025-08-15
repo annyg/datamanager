@@ -90,5 +90,5 @@ parse_variable_mapping <- function(file_path) {
   })
 
   return(var_table)
-  #return(list(var_table = var_table, value_labels = value_labels))
+  # return(list(var_table = var_table, value_labels = value_labels))
 }

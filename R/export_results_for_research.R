@@ -37,17 +37,16 @@ export_results_for_research <- function(
     write_as_sas = FALSE,
     write_dictionary = FALSE,
     write_codebook_word = FALSE,
-    write_codebook_html = FALSE
-) {
+    write_codebook_html = FALSE) {
   # Set the result_directory by concatenating the results_directory, results_date,
   # and a trailing slash ("/") to create a file path for the results directory
-  result_directory <- paste0(results_directory,"_", results_date, "/")
+  result_directory <- paste0(results_directory, "_", results_date, "/")
 
   # Create the result_directory by calling the dir.create() function and passing the result_directory
   dir.create(result_directory)
 
   # Set the result_file by concatenating the results_filename, results_date, and the file extension for each output format
-  result_file <- paste0(results_filename,"_", results_date)
+  result_file <- paste0(results_filename, "_", results_date)
 
   # Write the results to the specified formats ####
   # If write_as_csv is TRUE, export the data frame as a CSV file
@@ -72,7 +71,7 @@ export_results_for_research <- function(
 
   # If write_as_stata is TRUE, export the data frame as a Stata file
   if (write_as_stata) {
-   # rio::export(df, paste0(results_directory_location, result_directory, result_file, "_stata.dta"))
+    # rio::export(df, paste0(results_directory_location, result_directory, result_file, "_stata.dta"))
     tryCatch(
       {
         long_var_names <- names(df)[nchar(names(df)) > 32]

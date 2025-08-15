@@ -60,8 +60,10 @@
 #'
 #' @examples
 #' library(dplyr)
-#' df <- tibble(id = 1:3,
-#'              email = c("john.doe@gamil.com", " valid @hotmail,com ", "ok@example.org"))
+#' df <- tibble(
+#'   id = 1:3,
+#'   email = c("john.doe@gamil.com", " valid @hotmail,com ", "ok@example.org")
+#' )
 #'
 #' # Append results to original dataset
 #' clean_and_recheck_email(df, email, .append = TRUE)
@@ -78,29 +80,29 @@ clean_and_recheck_email <- function(.data, email_col, .append = TRUE, ...) {
   email_vec <- pull(.data, !!email_sym)
 
   # Pre-correction checks
-  pre_flag   <- check_email_syntax(email_vec, return = "flag", ...)
+  pre_flag <- check_email_syntax(email_vec, return = "flag", ...)
   pre_reason <- check_email_syntax(email_vec, return = "reason", ...)
 
   # Corrections and logs
-  corrected  <- check_email_syntax(email_vec, return = "corrected", ...)
-  log_rules  <- check_email_syntax(email_vec, return = "log", ...)
+  corrected <- check_email_syntax(email_vec, return = "corrected", ...)
+  log_rules <- check_email_syntax(email_vec, return = "log", ...)
 
   # Values to re-check
   to_check <- ifelse(!is.na(corrected), corrected, email_vec)
 
   # Post-correction checks
-  post_flag   <- check_email_syntax(to_check, return = "flag", ...)
+  post_flag <- check_email_syntax(to_check, return = "flag", ...)
   post_reason <- check_email_syntax(to_check, return = "reason", ...)
 
   # Build recheck tibble
   recheck_tbl <- tibble(
     !!as_name(email_sym) := email_vec,
-    pre_flag        = pre_flag,
-    pre_reason      = pre_reason,
+    pre_flag = pre_flag,
+    pre_reason = pre_reason,
     corrected_email = corrected,
-    correction_log  = log_rules,
-    post_flag       = post_flag,
-    post_reason     = post_reason
+    correction_log = log_rules,
+    post_flag = post_flag,
+    post_reason = post_reason
   )
 
   if (.append) {
