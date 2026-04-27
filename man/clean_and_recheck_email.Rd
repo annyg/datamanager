@@ -64,8 +64,10 @@ the original email column.
 }
 \examples{
 library(dplyr)
-df <- tibble(id = 1:3,
-             email = c("john.doe@gamil.com", " valid @hotmail,com ", "ok@example.org"))
+df <- tibble(
+  id = 1:3,
+  email = c("john.doe@gamil.com", " valid @hotmail,com ", "ok@example.org")
+)
 
 # Append results to original dataset
 clean_and_recheck_email(df, email, .append = TRUE)

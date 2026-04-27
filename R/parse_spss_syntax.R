@@ -25,6 +25,8 @@
 #' df_labels <- parse_spss_syntax("labels_2025.sps")
 #' }
 #'
+#' @importFrom stringr str_trim str_detect str_match
+#'
 #' @export
 parse_spss_syntax <- function(filepath) {
   library(stringr)

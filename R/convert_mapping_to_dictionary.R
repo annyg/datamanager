@@ -2,7 +2,30 @@
 library(dplyr)
 library(labelled)
 
-# Define the function to convert mapping to dataframe format
+#' Convert a textual mapping definition into a long-format data frame
+#'
+#' Parses a multi-line mapping string of the form used in this package's
+#' custom variable definition syntax (variable headers like
+#' `Var_name : 'Variable label' <- TYPE :: oldname` followed by indented
+#' value rows like `1 = 'Yes' <- 1`) and produces a long-format data frame
+#' with one row per variable and one row per value label.
+#'
+#' Generally [parse_variable_mapping()] (which reads from a file path and
+#' returns a wide format with one row per variable) is preferred; this
+#' helper exists primarily for inline strings.
+#'
+#' @param mapping_text Character. The full mapping text (a single string,
+#'   typically read from a file).
+#'
+#' @return A data frame with columns `Variable`, `Label`, and
+#'   `Value_Label`. Rows representing the variable header have `NA` in
+#'   `Value_Label`; rows representing value labels carry the value in
+#'   `Value_Label` and the value's label in `Label`.
+#'
+#' @seealso [convert_mapping_to_dictionary()] for a list-shaped result,
+#'   and [parse_variable_mapping()] for the file-based parser.
+#'
+#' @export
 convert_mapping_to_dataframe <- function(mapping_text) {
   # Split the input by lines and filter out empty lines
   lines <- strsplit(mapping_text, "\n")[[1]]
@@ -56,7 +79,24 @@ convert_mapping_to_dataframe <- function(mapping_text) {
   return(result_df)
 }
 
-# Define the function to convert mapping to dictionary format
+#' Convert a textual mapping definition into a nested dictionary
+#'
+#' Parses the same mapping syntax as [convert_mapping_to_dataframe()] but
+#' returns a nested list keyed by variable name, with each element holding
+#' the variable's `label` and a named list of `values` (value → value
+#' label).
+#'
+#' @param mapping_text Character. The full mapping text (a single string,
+#'   typically read from a file).
+#'
+#' @return A named list. Each element corresponds to one variable and has
+#'   the structure `list(label = "...", values = list("0" = "No",
+#'   "1" = "Yes", ...))`.
+#'
+#' @seealso [convert_mapping_to_dataframe()],
+#'   [parse_variable_mapping()].
+#'
+#' @export
 convert_mapping_to_dictionary <- function(mapping_text) {
   # Split the input by lines and filter out empty lines
   lines <- strsplit(mapping_text, "\n")[[1]]

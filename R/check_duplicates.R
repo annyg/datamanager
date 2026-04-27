@@ -1,16 +1,21 @@
-#' Check for duplicates in a dataset based on specified groups
+#' Return rows that are duplicated across the given grouping variables
 #'
-#' This function checks for duplicates in a dataset based on specified grouping variables.
+#' Groups the input by the columns passed via `...` and returns only the rows
+#' belonging to groups whose size is greater than one — i.e. the rows that
+#' share their grouping key with at least one other row. Useful for inspecting
+#' duplicates rather than removing them.
 #'
-#' @param data The input dataset to check for duplicates
-#' @param ... Unquoted variable names of the grouping variables
+#' @param data A data frame.
+#' @param ... Unquoted column names that together define the duplicate key.
 #'
-#' @return A data frame with duplicates removed based on the specified grouping variables
+#' @return A grouped data frame containing only the rows whose group size is
+#'   `> 1`, with the grouping columns moved to the front.
 #'
 #' @examples
 #' check_duplicates(mtcars, cyl, gear)
 #'
-#' @import dplyr
+#' @importFrom dplyr group_by filter select everything
+#' @importFrom rlang enquos
 #'
 #' @export
 check_duplicates <- function(

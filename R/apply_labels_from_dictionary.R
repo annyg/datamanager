@@ -13,6 +13,8 @@
 #' @return A labelled data frame with updated variable names, variable labels, and value labels.
 #'
 #' @importFrom labelled var_label var_label<- val_labels val_labels<-
+#' @importFrom dplyr rename
+#' @importFrom stringr str_match_all str_trim
 #' @export
 apply_labels_from_dictionary <- function(data,
                                          dictionary,

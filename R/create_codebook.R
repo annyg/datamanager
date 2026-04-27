@@ -1,14 +1,31 @@
 #' Create a codebook for the provided data
 #'
-#' This function generates a codebook containing variable labels, types, and frequency distributions for the input data.
+#' Builds a codebook table joining each variable's name, attached
+#' [labelled::var_label()], R class, and a newline-separated list of
+#' value frequencies (only for variables with fewer than 100 unique values).
+#' For date / datetime columns and a small set of project-specific variable
+#' name patterns (`_elaborate`, `Sero_*`, `vitas_*`, `F2_Ignore`,
+#' `E3_sym_onset_date`), the frequency cell is replaced with a domain label
+#' (e.g. `"Dates"`, `"Measured serology"`).
 #'
-#' @param data The dataset for which to create the codebook
-#' @return A data frame containing variable labels, types, and frequency distributions
+#' @param data A data frame, ideally with [labelled::var_label()] attributes
+#'   set on its columns.
+#'
+#' @return A data frame with one row per variable and the columns
+#'   `varname`, `varlabel`, `valfreqs`, and `vartype`.
 #'
 #' @examples
+#' \dontrun{
 #' create_codebook(mtcars)
+#' }
 #'
-#' @import questionr tibble dplyr stringr
+#' @importFrom questionr freq
+#' @importFrom tibble enframe rownames_to_column
+#' @importFrom dplyr rename mutate group_by row_number select full_join case_when mutate_at across
+#' @importFrom tidyr spread unite
+#' @importFrom stringr str_detect
+#' @importFrom purrr keep
+#' @importFrom labelled var_label
 #'
 #' @export
 create_codebook <- function(data) {

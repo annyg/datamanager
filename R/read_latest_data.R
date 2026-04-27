@@ -1,23 +1,37 @@
-#' Read the most recent QS file
+#' Read the most recent qs file written by `export_results_for_research()`
 #'
-#' This function reads the most recent file from a specified results directory, matching the given directory and filename prefixes.
-#' It complements `export_results_for_research()` by easily accessing the latest dataset.
+#' Locates the most recent dated subdirectory of the form
+#' `<results_directory>_<YYYY-MM-DD>` under `results_directory_location`,
+#' finds the most recent `<results_filename>_<YYYY-MM-DD>.qs` inside it, and
+#' loads it via [qs::qread()]. This is the companion reader for
+#' [export_results_for_research()] when `write_as_qs = TRUE`.
 #'
-#' @param results_directory_location A character string specifying the path to the base results directory.
-#' @param results_directory A character string specifying the prefix for the results directory (excluding the date).
-#' @param results_filename A character string specifying the prefix for the results filename (excluding the date).
+#' @param results_directory_location Character. Path containing the dated
+#'   results subdirectories.
+#' @param results_directory Character. Prefix of the results subdirectory
+#'   name (without the trailing `_YYYY-MM-DD`).
+#' @param results_filename Character. Prefix of the qs file name (without
+#'   the trailing `_YYYY-MM-DD.qs`).
 #'
-#' @return Returns the most recent data loaded from the QS file as a dataframe or an error message if no file is found.
+#' @return The data frame stored in the most recent matching `.qs` file.
+#'   Stops with an error if no matching file is found.
 #'
-#' @import tidyverse
-#' @import qs
+#' @seealso [export_results_for_research()].
+#'
+#' @importFrom dplyr mutate arrange slice pull desc
+#' @importFrom tibble as_tibble
+#' @importFrom stringr str_detect
+#' @importFrom purrr keep
+#' @importFrom qs qread
 #'
 #' @examples
-#' # Assume your working directory has the folder structure and files
-#' results_directory_location <- "data"
-#' results_directory <- "folder1"
-#' results_filename <- "rawdata"
-#' latest_data <- read_latest_qs(results_directory_location, results_directory, results_filename)
+#' \dontrun{
+#' latest_data <- read_latest_qs(
+#'   results_directory_location = "data/",
+#'   results_directory = "folder1",
+#'   results_filename = "rawdata"
+#' )
+#' }
 #'
 read_latest_qs <- function(results_directory_location, results_directory, results_filename) {
   # List subdirectories in the specified location to find recent folders

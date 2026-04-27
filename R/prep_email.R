@@ -14,10 +14,18 @@
 #' - Fixing `.vom` to `.com` and addressing double periods
 #'
 #' @return A character vector with preprocessed and cleaned email addresses.
+#'
+#' @seealso [check_email_syntax()] for a more comprehensive checker that
+#'   anchors corrections to the domain portion and can return flags, reasons,
+#'   corrected addresses, or a correction log; and [clean_and_recheck_email()]
+#'   for the data-frame-level wrapper.
+#'
 #' @examples
 #' prep_email(" Example.email @gamil.com ", TRUE, TRUE, TRUE)
 #' prep_email("user@homail.com", fix_spelling = TRUE)
 #'
+#' @importFrom stringr str_squish str_replace_all str_to_lower
+#' @importFrom magrittr %>%
 #' @export
 #'
 prep_email <- function(email, remove_spaces = TRUE, lowercase = TRUE, fix_spelling = FALSE) {

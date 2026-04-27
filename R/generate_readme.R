@@ -1,16 +1,22 @@
-#' Generate README File from Template
+#' Generate a README file from the bundled template
 #'
-#' This function creates a README file using an embedded template stored as internal data within the package.
-#' It ensures not to overwrite an existing file unless explicitly permitted.
+#' Writes the package's internal `readme_template` (stored in `R/sysdata.rda`)
+#' to a text file at `output_name`. Refuses to clobber an existing file unless
+#' `overwrite = TRUE`.
 #'
-#' @param output_name Character. The name of the output README file to create. Defaults to `"README_template.txt"`.
-#' @param overwrite Logical. If `TRUE`, allows overwriting the existing file. Defaults to `FALSE`.
+#' @param output_name Character. Path of the README file to create. Defaults
+#'   to `"README_template.txt"` in the working directory.
+#' @param overwrite Logical. If `TRUE`, an existing file at `output_name` is
+#'   replaced. Defaults to `FALSE`.
 #'
-#' @return Invisibly returns the name of the created or existing README file.
+#' @return Invisibly returns `output_name` when a file is written, or `NULL`
+#'   when nothing was written (file already exists and `overwrite = FALSE`).
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' generate_readme(output_name = "Project_Readme.txt", overwrite = FALSE)
+#' }
 generate_readme <- function(output_name = "README_template.txt", overwrite = FALSE) {
   # Check if internal data readme_template is available
   if (!exists("readme_template")) {

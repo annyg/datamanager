@@ -1,6 +1,32 @@
-#' Load unprocessed followup submissions
-#' @param x Messy email.
-#' @return Clean email.
+#' Categorise participant age into 5-year intervals
+#'
+#' Parses a Norwegian Social ID into a birthdate, computes age relative to
+#' `refDate`, and bins the result into 5-year age categories from `"18-24 years"`
+#' up to `"70 years +"`.
+#'
+#' @param socID Character. A Norwegian Social ID. Shorter strings are
+#'   left-padded with zeros to 11 characters.
+#' @param refDate Date. Reference date used to compute the age. Defaults to
+#'   `Sys.Date()`.
+#' @param unit Character. Time unit used internally when computing the age
+#'   (`"year"`, `"month"`, `"week"`, or `"day"`). Defaults to `"year"`.
+#' @param cutoff_2000 Integer. Two-digit-year cutoff passed to
+#'   [lubridate::parse_date_time2()]. Defaults to `22L`.
+#'
+#' @return A character vector of 5-year age band labels (e.g. `"25-29 years"`),
+#'   or `NA` if the SocID could not be parsed.
+#'
+#' @note The function in this file is currently named `get_participant_age()`
+#'   and collides with the function of the same name in
+#'   `R/get_participant_age.R`. It should be renamed (e.g.
+#'   `get_participant_age_5int()`) before use.
+#'
+#' @seealso [get_participant_age()] for the continuous age in a chosen unit.
+#'
+#' @importFrom lubridate parse_date_time2
+#' @importFrom stringr str_sub str_pad
+#' @importFrom dplyr case_when between
+#'
 #' @export
 get_participant_age <- function(socID, refDate = Sys.Date(), unit = "year", cutoff_2000 = 22L) {
   require(lubridate)

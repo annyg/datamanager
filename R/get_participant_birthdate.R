@@ -1,17 +1,23 @@
-#' Get participant birthdate based on social ID
+#' Extract the birthdate encoded in a Norwegian Social ID
 #'
-#' This function calculates the birthdate of a participant based on their social ID.
+#' Parses the leading 6 characters of a Norwegian Social Identification number
+#' (`ddmmyy`) as a birthdate. The SocID is left-padded to 11 characters before
+#' parsing, so shorter inputs (e.g. accidentally numeric-coerced IDs) are still
+#' handled.
 #'
-#' @param socID Social ID of the participant
-#' @param refDate Reference date for calculations (default is current date)
-#' @param unit The unit of time to calculate the birthdate difference in (default is "year")
-#' @param cutoff_2000 Cutoff year for two-digit year parsing (default is 22)
+#' @param socID Character. A Norwegian Social ID.
+#' @param refDate Date. Unused; retained for signature compatibility with
+#'   [get_participant_age()] and [calc_age()].
+#' @param unit Character. Unused; retained for signature compatibility with
+#'   [get_participant_age()] and [calc_age()].
+#' @param cutoff_2000 Integer. Two-digit-year cutoff passed to
+#'   [lubridate::parse_date_time2()]. Years `<= cutoff_2000` are interpreted as
+#'   20xx, otherwise 19xx. Defaults to `22L`.
 #'
-#' @return A date object representing the participant's birthdate
+#' @return A `POSIXct` object representing the participant's birthdate.
 #'
 #' @importFrom lubridate parse_date_time2
-#' @importFrom stringr str_sub
-#' @importFrom stringr str_pad
+#' @importFrom stringr str_sub str_pad
 #'
 #' @export
 #'

@@ -27,6 +27,8 @@
 #' mapping_df <- parse_variable_mapping("column_mapping.baseline.txt")
 #' }
 #'
+#' @importFrom stringr str_trim str_detect str_match
+#'
 #' @export
 parse_variable_mapping <- function(file_path) {
   library(stringr)
