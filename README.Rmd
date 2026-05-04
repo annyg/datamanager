@@ -54,6 +54,40 @@ pak::pak("annyg/datamanager")
 library(datamanager)
 ```
 
+### Offline install from a source tarball
+
+For users on a remote server without internet access to GitHub (but
+with CRAN dependencies already available), `datamanager` can be
+installed from a source tarball (`.tar.gz`) transferred to the machine.
+
+1.  On a machine with internet access, download the source tarball from
+    the [GitHub
+    releases](https://github.com/annyg/datamanager/releases) page (file
+    named `datamanager_<version>.tar.gz`), or build one from a clone of
+    the repository:
+
+    ``` r
+    # From the package root
+    devtools::build()           # writes ../datamanager_<version>.tar.gz
+    ```
+
+2.  Transfer the `.tar.gz` file to the server (e.g. via SFTP or a shared
+    drive).
+
+3.  On the server, install from the local file. Use
+    `remotes::install_local()` so that CRAN dependencies listed in
+    `DESCRIPTION` are pulled from the server's configured CRAN mirror:
+
+    ``` r
+    # install.packages("remotes")  # if not already available
+    remotes::install_local("/path/to/datamanager_<version>.tar.gz")
+    library(datamanager)
+    ```
+
+    Plain `install.packages(file, repos = NULL, type = "source")` also
+    works, but it will not resolve missing CRAN dependencies — install
+    those first if you take that route.
+
 ## Usage
 
 The `datamanager` package is designed to handle data frames and
