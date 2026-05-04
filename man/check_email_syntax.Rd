@@ -54,14 +54,19 @@ reasons for invalidity, corrected email addresses, or a log of corrections.
 \details{
 The function performs the following steps:
 \enumerate{
-\item \strong{Pre-correction checks}: Flags whitespace, multiple '@' signs,
-known domain typos for Gmail/Hotmail/Yahoo/Outlook, and invalid formats
-based on a simplified regex pattern.
-\item \strong{Corrections}: Applies sequential regex replacements to
+\item \strong{Pre-correction checks}: Flags parentheses, double dots,
+adjacent multiple \code{@} signs, two \code{@} signs anywhere, known domain typos
+for Gmail / Hotmail / Yahoo / Outlook, the \code{mailcom} typo, common TLD
+typos (e.g. \code{.vom}, \code{.con}, \verb{,com}), and any address that does not match
+a basic email regex. The \code{invalid_format_pre} reason is suppressed when
+the only problem is a major-provider domain missing its TLD
+(e.g. \code{user@gmail}).
+\item \strong{Corrections}: Optionally trims spaces and lowercases, then
+applies sequential regex replacements anchored to the domain portion to
 remove invalid characters, fix domain spelling mistakes, and correct
 common TLD errors (e.g., ".vom" → ".com").
-\item \strong{Post-correction cleanup}: Collapses double dots, and
-trims leading or trailing dots from the email.
+\item \strong{Post-correction cleanup}: Collapses double dots and trims
+leading or trailing dots from the email.
 }
 
 Domain corrections are anchored to the domain portion of the email

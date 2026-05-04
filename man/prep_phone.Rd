@@ -2,16 +2,23 @@
 % Please edit documentation in R/prep_phone.R
 \name{prep_phone}
 \alias{prep_phone}
-\title{Load unprocessed followup submissions}
+\title{Tidy a free-text phone number}
 \usage{
 prep_phone(x)
 }
 \arguments{
-\item{x}{Messy email.}
+\item{x}{Character vector of phone numbers, possibly containing spaces
+or parentheses.}
 }
 \value{
-Clean email.
+A character vector of the last eight digits of each cleaned number.
 }
 \description{
-Load unprocessed followup submissions
+Strips spaces and parentheses from a phone-number string, coerces the
+digits to numeric, and returns the last eight digits (the local subscriber
+part of a Norwegian phone number).
+}
+\examples{
+prep_phone("(+47) 22 33 44 55")
+
 }

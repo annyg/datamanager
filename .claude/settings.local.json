@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(grep -E \"\\\\.\\(RData|Rhistory\\)$|\\\\.Rproj\\\\.user\")"
+      "Bash(grep -E \"\\\\.\\(RData|Rhistory\\)$|\\\\.Rproj\\\\.user\")",
+      "PowerShell(& \"C:\\\\Program Files\\\\R\\\\R-4.5.0\\\\bin\\\\Rscript.exe\" -e \"options\\(crayon.enabled = FALSE\\); devtools::load_all\\('.', quiet = TRUE\\); testthat::test_dir\\('tests/testthat', reporter = 'summary'\\)\" 2>&1 | Select-Object -Last 80)",
+      "PowerShell(& \"C:\\\\Program Files\\\\R\\\\R-4.5.0\\\\bin\\\\Rscript.exe\" -e \"options\\(crayon.enabled = FALSE\\); devtools::load_all\\('.', quiet = TRUE\\); testthat::test_dir\\('tests/testthat', reporter = 'summary'\\)\" 2>&1 | Select-Object -Last 30)"
     ]
   }
 }

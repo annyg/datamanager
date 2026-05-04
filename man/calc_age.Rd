@@ -2,25 +2,33 @@
 % Please edit documentation in R/extract_participant_age.R
 \name{calc_age}
 \alias{calc_age}
-\title{Calculate age based on given social ID and reference date}
+\title{Calculate age from a Norwegian Social ID and a reference date}
 \usage{
 calc_age(socID, refDate = Sys.Date(), unit = "year", cutoff_2000 = 22L)
 }
 \arguments{
-\item{socID}{The social ID of the individual}
+\item{socID}{Character. A Norwegian Social ID.}
 
-\item{refDate}{The reference date to calculate the age from (default is today)}
+\item{refDate}{Date. The reference date to compute the age against.
+Defaults to \code{Sys.Date()}.}
 
-\item{unit}{The unit in which to return the age ('year', 'month', 'week', or 'day')}
+\item{unit}{Character. One of \code{"year"}, \code{"month"}, \code{"week"}, or \code{"day"}.
+Defaults to \code{"year"}.}
 
-\item{cutoff_2000}{The cutoff year for 2-digit years interpretation (default is 22)}
+\item{cutoff_2000}{Integer. Two-digit-year cutoff passed to
+\code{\link[lubridate:parse_date_time]{lubridate::parse_date_time2()}}. Years \verb{<= cutoff_2000} are interpreted
+as 20xx, otherwise 19xx. Defaults to \code{22L}.}
 }
 \value{
-The age of the individual in the specified unit
+A numeric value: the participant's age in the requested \code{unit},
+or \code{NA} if \code{unit} is not recognised.
 }
 \description{
-This function calculates the age of an individual based on their social ID and a reference date.
-The age can be returned in years, months, weeks, or days.
+Parses the leading 6 characters of a Norwegian Social Identification number
+(\code{ddmmyy}) as a birthdate and returns the age relative to \code{refDate}. The
+SocID is left-padded to 11 characters before parsing, so shorter inputs are
+tolerated. This is a duplicate implementation of \code{\link[=get_participant_age]{get_participant_age()}}
+and the two functions should be consolidated.
 }
 \examples{
 calc_age("01012012345", unit = "year")

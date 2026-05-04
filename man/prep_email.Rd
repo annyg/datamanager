@@ -34,3 +34,9 @@ prep_email(" Example.email @gamil.com ", TRUE, TRUE, TRUE)
 prep_email("user@homail.com", fix_spelling = TRUE)
 
 }
+\seealso{
+\code{\link[=check_email_syntax]{check_email_syntax()}} for a more comprehensive checker that
+anchors corrections to the domain portion and can return flags, reasons,
+corrected addresses, or a correction log; and \code{\link[=clean_and_recheck_email]{clean_and_recheck_email()}}
+for the data-frame-level wrapper.
+}

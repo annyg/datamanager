@@ -2,22 +2,28 @@
 % Please edit documentation in R/generate_readme.R
 \name{generate_readme}
 \alias{generate_readme}
-\title{Generate README File from Template}
+\title{Generate a README file from the bundled template}
 \usage{
 generate_readme(output_name = "README_template.txt", overwrite = FALSE)
 }
 \arguments{
-\item{output_name}{Character. The name of the output README file to create. Defaults to \code{"README_template.txt"}.}
+\item{output_name}{Character. Path of the README file to create. Defaults
+to \code{"README_template.txt"} in the working directory.}
 
-\item{overwrite}{Logical. If \code{TRUE}, allows overwriting the existing file. Defaults to \code{FALSE}.}
+\item{overwrite}{Logical. If \code{TRUE}, an existing file at \code{output_name} is
+replaced. Defaults to \code{FALSE}.}
 }
 \value{
-Invisibly returns the name of the created or existing README file.
+Invisibly returns \code{output_name} when a file is written, or \code{NULL}
+when nothing was written (file already exists and \code{overwrite = FALSE}).
 }
 \description{
-This function creates a README file using an embedded template stored as internal data within the package.
-It ensures not to overwrite an existing file unless explicitly permitted.
+Writes the package's internal \code{readme_template} (stored in \code{R/sysdata.rda})
+to a text file at \code{output_name}. Refuses to clobber an existing file unless
+\code{overwrite = TRUE}.
 }
 \examples{
+\dontrun{
 generate_readme(output_name = "Project_Readme.txt", overwrite = FALSE)
+}
 }

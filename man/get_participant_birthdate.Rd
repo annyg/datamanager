@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_participant_birthdate.R
 \name{get_participant_birthdate}
 \alias{get_participant_birthdate}
-\title{Get participant birthdate based on social ID}
+\title{Extract the birthdate encoded in a Norwegian Social ID}
 \usage{
 get_participant_birthdate(
   socID,
@@ -12,17 +12,24 @@ get_participant_birthdate(
 )
 }
 \arguments{
-\item{socID}{Social ID of the participant}
+\item{socID}{Character. A Norwegian Social ID.}
 
-\item{refDate}{Reference date for calculations (default is current date)}
+\item{refDate}{Date. Unused; retained for signature compatibility with
+\code{\link[=get_participant_age]{get_participant_age()}} and \code{\link[=calc_age]{calc_age()}}.}
 
-\item{unit}{The unit of time to calculate the birthdate difference in (default is "year")}
+\item{unit}{Character. Unused; retained for signature compatibility with
+\code{\link[=get_participant_age]{get_participant_age()}} and \code{\link[=calc_age]{calc_age()}}.}
 
-\item{cutoff_2000}{Cutoff year for two-digit year parsing (default is 22)}
+\item{cutoff_2000}{Integer. Two-digit-year cutoff passed to
+\code{\link[lubridate:parse_date_time]{lubridate::parse_date_time2()}}. Years \verb{<= cutoff_2000} are interpreted as
+20xx, otherwise 19xx. Defaults to \code{22L}.}
 }
 \value{
-A date object representing the participant's birthdate
+A \code{POSIXct} object representing the participant's birthdate.
 }
 \description{
-This function calculates the birthdate of a participant based on their social ID.
+Parses the leading 6 characters of a Norwegian Social Identification number
+(\code{ddmmyy}) as a birthdate. The SocID is left-padded to 11 characters before
+parsing, so shorter inputs (e.g. accidentally numeric-coerced IDs) are still
+handled.
 }

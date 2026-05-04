@@ -2,7 +2,7 @@
 % Please edit documentation in R/export_results_for_research.R
 \name{export_results_for_research}
 \alias{export_results_for_research}
-\title{Export Results for Research}
+\title{Export a labelled data frame in multiple research formats}
 \usage{
 export_results_for_research(
   df,
@@ -22,40 +22,76 @@ export_results_for_research(
 )
 }
 \arguments{
-\item{df}{The data frame to be processed.}
+\item{df}{The data frame to export.}
 
-\item{results_directory}{The name of the results directory (optional, default is "results").}
+\item{results_directory_location}{Character. Path prefix prepended to the
+created results subdirectory. The full output path is
+\code{paste0(results_directory_location, results_directory, "_", results_date, "/")}.}
 
-\item{results_filename}{The name of the results file (optional, default is "results").}
+\item{results_directory}{Character. Name (prefix) of the results
+subdirectory. The current \code{results_date} is appended to it. Defaults to
+\code{"results"}.}
 
-\item{results_date}{The date to be appended to the directory and file names (optional, default is Sys.Date()).}
+\item{results_filename}{Character. Stem of the output file name; the
+\code{results_date} and a format-specific suffix/extension are appended.
+Defaults to \code{"results"}.}
 
-\item{write_as_csv}{A logical indicating whether to write the results as a CSV file (optional, default is TRUE).}
+\item{results_date}{Date or character. Date appended to both the directory
+and file names. Defaults to \code{Sys.Date()}.}
 
-\item{write_as_excel}{A logical indicating whether to write the results as an Excel file (optional, default is FALSE).}
+\item{write_as_csv}{Logical. Write a CSV file. Defaults to \code{TRUE}.}
 
-\item{write_as_qs}{A logical indicating whether to write the results as a QS file (optional, default is FALSE).}
+\item{write_as_excel}{Logical. Write an Excel (\code{.xlsx}) file. Defaults to
+\code{FALSE}.}
 
-\item{write_as_spss}{A logical indicating whether to write the results as an SPSS file (optional, default is FALSE).}
+\item{write_as_qs}{Logical. Write a \code{qs} file. Defaults to \code{FALSE}.}
 
-\item{write_as_stata}{A logical indicating whether to write the results as a Stata file (optional, default is FALSE).}
+\item{write_as_spss}{Logical. Write an SPSS (\code{.sav}) file. Defaults to
+\code{FALSE}.}
 
-\item{write_as_sas}{A logical indicating whether to write the results as a SAS file (optional, default is FALSE).}
+\item{write_as_stata}{Logical. Write a Stata (\code{.dta}) file. Variables with
+names longer than 32 characters are dropped (Stata's limit). Defaults to
+\code{FALSE}.}
 
-\item{write_dictionary}{A logical indicating whether to generate a dictionary for the data frame (optional, default is FALSE).}
+\item{write_as_sas}{Logical. Write a SAS file. Defaults to \code{FALSE}.
+\emph{(Currently unused — no SAS export is performed.)}}
 
-\item{write_codebook_word}{A logical indicating whether to generate a Word document codebook for the data frame (optional, default is FALSE).}
+\item{write_dictionary}{Logical. Generate a \code{\link[labelled:look_for]{labelled::generate_dictionary()}}
+summary and write it as an Excel file. Defaults to \code{FALSE}.}
 
-\item{write_codebook_html}{A logical indicating whether to generate an HTML codebook table for the data frame (optional, default is FALSE).}
+\item{write_codebook_word}{Logical. Generate a Word codebook via
+\code{\link[codebookr:codebook]{codebookr::codebook()}}. Defaults to \code{FALSE}.}
+
+\item{write_codebook_html}{Logical. Generate an interactive HTML codebook
+table from \code{\link[=create_codebook]{create_codebook()}} saved as an \code{htmlwidget}. Defaults to
+\code{FALSE}.}
 }
 \value{
-None
+Called for its side effects (files written to disk). Returns
+\code{NULL} invisibly.
 }
 \description{
-This function exports the results of a data frame and labelled data for research purposes. It allows you to specify the output formats and generate metadata such as codebooks and dictionaries.
+Writes the input data frame to one or more file formats (CSV, Excel, qs,
+SPSS, Stata, SAS) inside a dated results subdirectory, and optionally
+generates a data dictionary or a codebook (HTML or Word) alongside the
+data file. The companion function \code{\link[=read_latest_qs]{read_latest_qs()}} reads the qs output
+produced by this function.
 }
 \examples{
-# Export results for research
-export_results_for_research(df = my_data, results_directory = "output", results_filename = "my_results", write_as_csv = TRUE, write_as_excel = TRUE, write_dictionary = TRUE)
+\dontrun{
+export_results_for_research(
+  df = my_data,
+  results_directory_location = "",
+  results_directory = "output",
+  results_filename = "my_results",
+  write_as_csv = TRUE,
+  write_as_excel = TRUE,
+  write_dictionary = TRUE
+)
+}
 
+}
+\seealso{
+\code{\link[=read_latest_qs]{read_latest_qs()}}, \code{\link[=create_codebook]{create_codebook()}},
+\code{\link[=apply_labels_from_dictionary]{apply_labels_from_dictionary()}}.
 }

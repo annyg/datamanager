@@ -2,20 +2,24 @@
 % Please edit documentation in R/check_duplicates.R
 \name{check_duplicates}
 \alias{check_duplicates}
-\title{Check for duplicates in a dataset based on specified groups}
+\title{Return rows that are duplicated across the given grouping variables}
 \usage{
 check_duplicates(data, ...)
 }
 \arguments{
-\item{data}{The input dataset to check for duplicates}
+\item{data}{A data frame.}
 
-\item{...}{Unquoted variable names of the grouping variables}
+\item{...}{Unquoted column names that together define the duplicate key.}
 }
 \value{
-A data frame with duplicates removed based on the specified grouping variables
+A grouped data frame containing only the rows whose group size is
+\verb{> 1}, with the grouping columns moved to the front.
 }
 \description{
-This function checks for duplicates in a dataset based on specified grouping variables.
+Groups the input by the columns passed via \code{...} and returns only the rows
+belonging to groups whose size is greater than one — i.e. the rows that
+share their grouping key with at least one other row. Useful for inspecting
+duplicates rather than removing them.
 }
 \examples{
 check_duplicates(mtcars, cyl, gear)

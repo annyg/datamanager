@@ -2,23 +2,30 @@
 % Please edit documentation in R/drop_long_variables.R
 \name{drop_long_variables}
 \alias{drop_long_variables}
-\title{Drop long variables from a dataset}
+\title{Drop variables whose names exceed a given length}
 \usage{
 drop_long_variables(data, variable_length = 32)
 }
 \arguments{
-\item{data}{The dataset from which to drop long variables.}
+\item{data}{A data frame.}
 
-\item{variable_length}{The maximum character length for a variable name. Default is 32.}
+\item{variable_length}{Integer. Maximum allowed character length for a
+column name. Defaults to \code{32}.}
 }
 \value{
-A list containing the modified dataset and a message with the names of dropped variables.
+A list with two elements:
+\describe{
+\item{\code{data}}{The input data frame with offending columns removed.}
+\item{\code{message}}{A character vector of the dropped column names.}
+}
 }
 \description{
-This function drops variables from a dataset that have names longer than a specified length.
+Removes columns whose names have more than \code{variable_length} characters.
+Useful before exporting to formats with name-length limits (e.g. Stata
+caps variable names at 32 characters). Emits a \code{message()} listing the
+dropped names.
 }
 \examples{
-data <- iris
-drop_long_variables(data, 5)
+drop_long_variables(iris, 5)
 
 }

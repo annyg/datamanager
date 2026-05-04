@@ -3,7 +3,7 @@
 %   R/get_participant_age_5int.R
 \name{get_participant_age}
 \alias{get_participant_age}
-\title{Load unprocessed followup submissions}
+\title{Calculate participant age from a Norwegian Social ID}
 \usage{
 get_participant_age(
   socID,
@@ -20,15 +20,42 @@ get_participant_age(
 )
 }
 \arguments{
-\item{x}{Messy email.}
+\item{socID}{Character. A Norwegian Social ID. Shorter strings are
+left-padded with zeros to 11 characters.}
+
+\item{refDate}{Date. Reference date used to compute the age. Defaults to
+\code{Sys.Date()}.}
+
+\item{unit}{Character. Time unit used internally when computing the age
+(\code{"year"}, \code{"month"}, \code{"week"}, or \code{"day"}). Defaults to \code{"year"}.}
+
+\item{cutoff_2000}{Integer. Two-digit-year cutoff passed to
+\code{\link[lubridate:parse_date_time]{lubridate::parse_date_time2()}}. Defaults to \code{22L}.}
 }
 \value{
-Clean email.
+A numeric value: the participant's age in the requested \code{unit}, or
+\code{NA} if \code{unit} is not recognised.
 
-Clean email.
+A character vector of 5-year age band labels (e.g. \code{"25-29 years"}),
+or \code{NA} if the SocID could not be parsed.
 }
 \description{
-Load unprocessed followup submissions
+Parses the leading 6 characters of a Norwegian Social Identification number
+(\code{ddmmyy}) as a birthdate and returns the participant's age relative to a
+reference date. The SocID is left-padded to 11 characters before parsing.
 
-Load unprocessed followup submissions
+Parses a Norwegian Social ID into a birthdate, computes age relative to
+\code{refDate}, and bins the result into 5-year age categories from \code{"18-24 years"}
+up to \code{"70 years +"}.
+}
+\note{
+The function in this file is currently named \code{get_participant_age()}
+and collides with the function of the same name in
+\code{R/get_participant_age.R}. It should be renamed (e.g.
+\code{get_participant_age_5int()}) before use.
+}
+\seealso{
+\code{\link[=calc_age]{calc_age()}}, \code{\link[=get_participant_birthdate]{get_participant_birthdate()}}
+
+\code{\link[=get_participant_age]{get_participant_age()}} for the continuous age in a chosen unit.
 }

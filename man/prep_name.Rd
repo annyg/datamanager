@@ -2,16 +2,23 @@
 % Please edit documentation in R/prep_name.R
 \name{prep_name}
 \alias{prep_name}
-\title{Load unprocessed followup submissions}
+\title{Tidy a free-text name}
 \usage{
 prep_name(x)
 }
 \arguments{
-\item{x}{Messy email.}
+\item{x}{Character vector of names.}
 }
 \value{
-Clean email.
+A character vector of the same length as \code{x}, with whitespace
+squished and casing normalised to title case.
 }
 \description{
-Load unprocessed followup submissions
+Normalises a person's name by collapsing internal whitespace and
+converting the result to title case (first letter of each word capitalised,
+the rest lower case).
+}
+\examples{
+prep_name("  ANDERS    nygaard ")
+
 }

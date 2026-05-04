@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_latest_data.R, R/read_latest_qs.R
 \name{read_latest_qs}
 \alias{read_latest_qs}
-\title{Read the most recent QS file}
+\title{Read the most recent qs file written by \code{export_results_for_research()}}
 \usage{
 read_latest_qs(results_directory_location, results_directory, results_filename)
 
@@ -16,23 +16,29 @@ read_latest_qs(results_directory_location, results_directory, results_filename)
 \item{results_filename}{A character string specifying the prefix for the results filename (excluding the date).}
 }
 \value{
-Returns the most recent data loaded from the QS file as a dataframe or an error message if no file is found.
+The data frame stored in the most recent matching \code{.qs} file.
+Stops with an error if no matching file is found.
 
 Returns the most recent data loaded from the QS file as a dataframe or an error message if no file is found.
 }
 \description{
-This function reads the most recent file from a specified results directory, matching the given directory and filename prefixes.
-It complements \code{export_results_for_research()} by easily accessing the latest dataset.
+Locates the most recent dated subdirectory of the form
+\verb{<results_directory>_<YYYY-MM-DD>} under \code{results_directory_location},
+finds the most recent \verb{<results_filename>_<YYYY-MM-DD>.qs} inside it, and
+loads it via \code{\link[qs:qread]{qs::qread()}}. This is the companion reader for
+\code{\link[=export_results_for_research]{export_results_for_research()}} when \code{write_as_qs = TRUE}.
 
 This function reads the most recent file from a specified results directory, matching the given directory and filename prefixes.
 It complements \code{export_results_for_research()} by easily accessing the latest dataset.
 }
 \examples{
-# Assume your working directory has the folder structure and files
-results_directory_location <- "data"
-results_directory <- "folder1"
-results_filename <- "rawdata"
-latest_data <- read_latest_qs(results_directory_location, results_directory, results_filename)
+\dontrun{
+latest_data <- read_latest_qs(
+  results_directory_location = "data/",
+  results_directory = "folder1",
+  results_filename = "rawdata"
+)
+}
 
 # Assume your working directory has the folder structure and files
 results_directory_location <- "data"
@@ -40,4 +46,7 @@ results_directory <- "folder1"
 results_filename <- "rawdata"
 latest_data <- read_latest_qs(results_directory_location, results_directory, results_filename)
 
+}
+\seealso{
+\code{\link[=export_results_for_research]{export_results_for_research()}}.
 }

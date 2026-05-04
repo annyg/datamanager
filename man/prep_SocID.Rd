@@ -2,19 +2,21 @@
 % Please edit documentation in R/prep_SocID.R
 \name{prep_SocID}
 \alias{prep_SocID}
-\title{Corrects the Norwegian Social Identification (SocID) number by left-padding it with zeros to have a length of 11.}
+\title{Left-pad a Norwegian Social ID to 11 characters}
 \usage{
 prep_SocID(SocID)
 }
 \arguments{
-\item{SocID}{A character representing the SocID to be corrected.}
+\item{SocID}{Character or numeric vector of Social IDs.}
 }
 \value{
-A character string with the corrected SocID.
+A character vector of zero-padded 11-character SocIDs.
 }
 \description{
-Corrects the Norwegian Social Identification (SocID) number by left-padding it with zeros to have a length of 11.
+Norwegian Social Identification numbers are 11 characters long, but are
+often stored as numerics that drop leading zeros. This helper restores them
+by left-padding the input with \code{0}s up to length 11.
 }
 \examples{
-prep_SocID("12345") # Returns "000000012345"
+prep_SocID("12345") # Returns "000000" + "12345" = "00000012345"
 }

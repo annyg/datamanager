@@ -7,15 +7,25 @@
 create_codebook(data)
 }
 \arguments{
-\item{data}{The dataset for which to create the codebook}
+\item{data}{A data frame, ideally with \code{\link[labelled:var_label]{labelled::var_label()}} attributes
+set on its columns.}
 }
 \value{
-A data frame containing variable labels, types, and frequency distributions
+A data frame with one row per variable and the columns
+\code{varname}, \code{varlabel}, \code{valfreqs}, and \code{vartype}.
 }
 \description{
-This function generates a codebook containing variable labels, types, and frequency distributions for the input data.
+Builds a codebook table joining each variable's name, attached
+\code{\link[labelled:var_label]{labelled::var_label()}}, R class, and a newline-separated list of
+value frequencies (only for variables with fewer than 100 unique values).
+For date / datetime columns and a small set of project-specific variable
+name patterns (\verb{_elaborate}, \verb{Sero_*}, \verb{vitas_*}, \code{F2_Ignore},
+\code{E3_sym_onset_date}), the frequency cell is replaced with a domain label
+(e.g. \code{"Dates"}, \code{"Measured serology"}).
 }
 \examples{
+\dontrun{
 create_codebook(mtcars)
+}
 
 }

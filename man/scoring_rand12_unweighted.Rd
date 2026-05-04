@@ -54,5 +54,5 @@ A data frame with unweighted RAND-12 PCS (PCS12_unwh) and MCS (MCS12_unwh) score
 This function generates the unweighted RAND-12 PCS and MCS scores that range from 0 to 100, with higher scores indicating better HRQoL.
 }
 \references{
-Andersen, J. R., et al. (2022). Correlated physical and mental health composite scores for the RAND-36 and RAND-12 health surveys: Can we keep them simple? Health and Quality of Life Outcomes, 20(1), 89. https://doi.org/10.1186/s12955-022-01992-0
+Andersen, J. R., et al. (2022). Correlated physical and mental health composite scores for the RAND-36 and RAND-12 health surveys: Can we keep them simple? Health and Quality of Life Outcomes, 20(1), 89. \doi{10.1186/s12955-022-01992-0}
 }

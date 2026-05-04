@@ -16,7 +16,7 @@ Encoding: UTF-8
 Language: EN
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-Imports: 
+Imports:
     codebookr,
     dplyr,
     DT,
@@ -25,5 +25,8 @@ Imports:
     labelled,
     rio,
     webshot
-Depends: 
+Suggests:
+    testthat (>= 3.0.0)
+Depends:
     R (>= 3.5)
+Config/testthat/edition: 3

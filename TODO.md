@@ -8,6 +8,7 @@ Suggestions for future improvements, grouped by impact. None of these are urgent
 - [ ] **`get_participant_age_5int.R` defines `get_participant_age`, not a 5-interval variant.** It overwrites `get_participant_age()` from `R/get_participant_age.R`, computes the early `if/else` block but discards the result, then runs `case_when()` on a `birthDate` (a Date) using numeric comparisons that can never match. The function as written cannot return age bands. Either rename to `get_participant_age_5int()` and fix the logic to compare *ages*, or delete the file.
 - [ ] **`get_participant_birthdate()` uses copy-pasted roxygen.** `@param x Messy email. @return Clean email.` in `R/get_participant_age.R` is left over from `prep_email`. Fix the docs.
 - [ ] **Orphan `man/hello.Rd`** has no matching `R/hello.R`. Delete it (and rerun `devtools::document()`).
+- [ ] **`drop_long_variables()` degrades to a vector when only one column is kept.** The body does `data[, !(nchar(names(data)) > variable_length)]` without `drop = FALSE`, so single-column results lose their data-frame class. Fix to `data[, ..., drop = FALSE]`. The test in `tests/testthat/test-drop_long_variables.R` currently side-steps this with a 2-column fixture.
 
 ## CRAN-readiness / R CMD check
 
