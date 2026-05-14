@@ -92,9 +92,34 @@ export_results_for_research <- function(
     rio::export(df, paste0(results_directory_location, result_directory, result_file, "_excel.xlsx"))
   }
 
-  # If write_as_spss is TRUE, export the data frame as an SPSS file
+  # If write_as_spss is TRUE, export the data frame as an SPSS file.
+  # SPSS variable names must be <= 64 bytes, start with a letter / @ / # / $,
+  # contain only letters/digits/._$@#, not end in ".", and not match a
+  # reserved keyword. Drop offenders with a warning rather than letting
+  # haven::write_sav() abort the whole export pipeline.
   if (write_as_spss) {
-    rio::export(df, paste0(results_directory_location, result_directory, result_file, "_spss.sav"))
+    spss_reserved <- c("ALL", "AND", "BY", "EQ", "GE", "GT", "LE", "LT",
+                       "NE", "NOT", "OR", "TO", "WITH")
+    nm <- names(df)
+    invalid_spss <- nm[
+      nchar(nm) > 64 |
+        !grepl("^[A-Za-z@#$][A-Za-z0-9._$@#]*$", nm) |
+        grepl("\\.$", nm) |
+        toupper(nm) %in% spss_reserved
+    ]
+    df_spss_export <- df[, !(nm %in% invalid_spss), drop = FALSE]
+
+    if (length(invalid_spss) > 0) {
+      warning("Dropped variables with names invalid for SPSS: ",
+              paste(invalid_spss, collapse = ", "))
+    }
+
+    tryCatch(
+      rio::export(df_spss_export, paste0(results_directory_location, result_directory, result_file, "_spss.sav")),
+      error = function(e) {
+        warning("Error exporting SPSS file: ", e$message)
+      }
+    )
   }
 
   # If write_as_qs is TRUE, export the data frame as a QS file
@@ -102,23 +127,22 @@ export_results_for_research <- function(
     rio::export(df, paste0(results_directory_location, result_directory, result_file, "_qs.qs"))
   }
 
-  # If write_as_stata is TRUE, export the data frame as a Stata file
+  # If write_as_stata is TRUE, export the data frame as a Stata file.
+  # Stata variable names are limited to 32 characters; drop offenders with a
+  # warning so the rest of the pipeline still runs.
   if (write_as_stata) {
-    # rio::export(df, paste0(results_directory_location, result_directory, result_file, "_stata.dta"))
+    dropped_vars <- names(df)[nchar(names(df)) > 32]
+    df_stata_export <- df[, !(nchar(names(df)) > 32), drop = FALSE]
+
+    if (length(dropped_vars) > 0) {
+      warning("Dropped variables with names longer than 32 characters (Stata limit): ",
+              paste(dropped_vars, collapse = ", "))
+    }
+
     tryCatch(
-      {
-        long_var_names <- names(df)[nchar(names(df)) > 32]
-        dropped_vars <- names(df)[nchar(names(df)) > 32]
-        df_stata_export <- df[, !(nchar(names(df)) > 32)]
-
-        warning(paste("Dropped variables longer than", 32, "characters:", paste(dropped_vars, collapse = ", ")))
-
-        return(list(data = data, message = dropped_vars))
-
-        rio::export(df_stata_export, paste0(results_directory_location, result_directory, result_file, "_stata.dta"))
-      },
+      rio::export(df_stata_export, paste0(results_directory_location, result_directory, result_file, "_stata.dta")),
       error = function(e) {
-        warning("Error exporting Stata file:", e$message)
+        warning("Error exporting Stata file: ", e$message)
       }
     )
   }
