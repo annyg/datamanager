@@ -4,11 +4,33 @@
 \alias{create_codebook}
 \title{Create a codebook for the provided data}
 \usage{
-create_codebook(data)
+create_codebook(
+  data,
+  mask_dates = TRUE,
+  mask_free_text = TRUE,
+  free_text_threshold = 0.9,
+  free_text_min_n = 10L
+)
 }
 \arguments{
 \item{data}{A data frame, ideally with \code{\link[labelled:var_label]{labelled::var_label()}} attributes
 set on its columns.}
+
+\item{mask_dates}{Logical. If \code{TRUE} (default), date / POSIXct columns are
+replaced with their observed min/max range. Set to \code{FALSE} to fall back
+to the raw frequency table.}
+
+\item{mask_free_text}{Logical. If \code{TRUE} (default), character / factor
+columns whose non-NA values are mostly distinct (see
+\code{free_text_threshold}) are redacted.}
+
+\item{free_text_threshold}{Numeric in \verb{(0, 1]}. Uniqueness ratio
+(\code{n_distinct(x) / n_non_na}) at or above which a character / factor
+column is flagged as free text. Defaults to \code{0.9}.}
+
+\item{free_text_min_n}{Integer. Minimum number of non-NA values required
+before the uniqueness ratio is considered meaningful. Defaults to \code{10}
+so tiny datasets do not produce spurious free-text flags.}
 }
 \value{
 A data frame with one row per variable and the columns
@@ -18,10 +40,18 @@ A data frame with one row per variable and the columns
 Builds a codebook table joining each variable's name, attached
 \code{\link[labelled:var_label]{labelled::var_label()}}, R class, and a newline-separated list of
 value frequencies (only for variables with fewer than 100 unique values).
-For date / datetime columns and a small set of project-specific variable
-name patterns (\verb{_elaborate}, \verb{Sero_*}, \verb{vitas_*}, \code{F2_Ignore},
-\code{E3_sym_onset_date}), the frequency cell is replaced with a domain label
-(e.g. \code{"Dates"}, \code{"Measured serology"}).
+}
+\details{
+Two redaction defaults are applied to keep potentially identifying
+information out of the codebook:
+\itemize{
+\item \strong{Date / datetime columns} are summarised as \code{"YYYY-MM-DD -- YYYY-MM-DD"}
+(the observed min / max) rather than enumerating every unique date.
+\item \strong{Free-text columns} -- character or factor columns whose non-NA values
+are mostly distinct -- are replaced with the literal \code{"Free text (redacted)"}.
+}
+
+Both behaviours can be turned off or tuned via arguments.
 }
 \examples{
 \dontrun{

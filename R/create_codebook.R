@@ -6,10 +6,10 @@
 #'
 #' Two redaction defaults are applied to keep potentially identifying
 #' information out of the codebook:
-#' * **Date / datetime columns** are summarised as `"YYYY-MM-DD — YYYY-MM-DD"`
+#' * **Date / datetime columns** are summarised as `"YYYY-MM-DD -- YYYY-MM-DD"`
 #'   (the observed min / max) rather than enumerating every unique date.
-#' * **Free-text columns** — character or factor columns whose non-NA values
-#'   are mostly distinct — are replaced with the literal `"Free text (redacted)"`.
+#' * **Free-text columns** -- character or factor columns whose non-NA values
+#'   are mostly distinct -- are replaced with the literal `"Free text (redacted)"`.
 #'
 #' Both behaviours can be turned off or tuned via arguments.
 #'
@@ -50,19 +50,19 @@ create_codebook <- function(data,
                             free_text_threshold = 0.9,
                             free_text_min_n = 10L) {
   # Identify date / datetime columns up-front via inherits() rather than
-  # string-matching a deparsed class vector later — POSIXct columns have
+  # string-matching a deparsed class vector later -- POSIXct columns have
   # class c("POSIXct", "POSIXt"), which previous string-comparison logic
   # failed to detect.
   date_vars <- names(data)[vapply(
     data, inherits, logical(1), what = c("Date", "POSIXt")
   )]
 
-  # For each date column, summarise to a "min — max" range string. Avoids
+  # For each date column, summarise to a "min -- max" range string. Avoids
   # enumerating every unique date in the codebook (privacy + readability).
   date_summaries <- vapply(data[date_vars], function(x) {
     if (all(is.na(x))) return("(no dates)")
     rng <- range(x, na.rm = TRUE)
-    paste(format(rng, "%Y-%m-%d"), collapse = " — ")
+    paste(format(rng, "%Y-%m-%d"), collapse = " -- ")
   }, character(1))
 
   # Heuristically flag free-text columns: character / factor columns where
