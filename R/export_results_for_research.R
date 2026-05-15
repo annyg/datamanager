@@ -151,11 +151,6 @@ export_results_for_research <- function(
 
   # Create metadata for the data frame ####
 
-  # Load the required packages for creating and exporting metadata
-  library(labelled)
-  library(DT)
-  library(webshot)
-
   ## Generate an HTML codebook ####
   if (write_codebook_html) {
     # # Get the column names of the data frame

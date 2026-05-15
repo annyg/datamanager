@@ -16,6 +16,7 @@
 #' get_column_names(data)
 #'
 #' @importFrom dplyr rename mutate
+#' @importFrom magrittr %>%
 #' @importFrom stringr str_length
 #' @export
 get_column_names <- function(data) {

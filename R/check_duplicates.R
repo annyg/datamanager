@@ -14,7 +14,8 @@
 #' @examples
 #' check_duplicates(mtcars, cyl, gear)
 #'
-#' @importFrom dplyr group_by filter select everything
+#' @importFrom dplyr group_by filter select everything n
+#' @importFrom magrittr %>%
 #' @importFrom rlang enquos
 #'
 #' @export

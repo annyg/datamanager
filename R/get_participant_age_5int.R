@@ -16,20 +16,14 @@
 #' @return A character vector of 5-year age band labels (e.g. `"25-29 years"`),
 #'   or `NA` if the SocID could not be parsed.
 #'
-#' @note The function in this file is currently named `get_participant_age()`
-#'   and collides with the function of the same name in
-#'   `R/get_participant_age.R`. It should be renamed (e.g.
-#'   `get_participant_age_5int()`) before use.
-#'
 #' @seealso [get_participant_age()] for the continuous age in a chosen unit.
 #'
-#' @importFrom lubridate parse_date_time2
+#' @importFrom lubridate parse_date_time2 as.period interval
 #' @importFrom stringr str_sub str_pad
 #' @importFrom dplyr case_when between
 #'
 #' @export
-get_participant_age <- function(socID, refDate = Sys.Date(), unit = "year", cutoff_2000 = 22L) {
-  require(lubridate)
+get_participant_age_5int <- function(socID, refDate = Sys.Date(), unit = "year", cutoff_2000 = 22L) {
   birthDate <- parse_date_time2(str_sub(str_pad(socID, 11, "left", pad = 0), 0, 6), "dmy", cutoff_2000 = cutoff_2000)
   if (grepl(x = unit, pattern = "year")) {
     as.period(interval(birthDate, refDate), unit = "year")$year

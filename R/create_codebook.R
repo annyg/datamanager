@@ -38,9 +38,10 @@
 #'
 #' @importFrom questionr freq
 #' @importFrom tibble enframe rownames_to_column
-#' @importFrom dplyr rename mutate group_by row_number select full_join case_when across
+#' @importFrom dplyr rename mutate group_by row_number select full_join case_when across ungroup
 #' @importFrom tidyr spread unite
 #' @importFrom purrr keep
+#' @importFrom magrittr %>%
 #' @importFrom labelled var_label
 #'
 #' @export

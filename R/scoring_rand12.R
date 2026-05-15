@@ -38,7 +38,6 @@ scoring_rand12_unweighted <- function(
     RAND36_9e = Energetic_feeling4w,
     RAND36_9f = Depressed_feeling4w,
     RAND36_10 = PhysicalAndEmotional_Social4w) {
-  library(tidyverse)
   # 1. Preserve raw data so they can be used for control
   data <- data %>%
     mutate(

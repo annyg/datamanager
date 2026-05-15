@@ -54,8 +54,9 @@
 #'
 #' @seealso \code{\link{check_email_syntax}}
 #'
-#' @importFrom rlang enquo as_name
+#' @importFrom rlang enquo as_name :=
 #' @importFrom dplyr pull bind_cols select
+#' @importFrom magrittr %>%
 #' @importFrom tibble tibble
 #'
 #' @examples

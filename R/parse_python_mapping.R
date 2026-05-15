@@ -31,9 +31,6 @@
 #'
 #' @export
 parse_variable_mapping <- function(file_path) {
-  library(stringr)
-  library(dplyr)
-
   # Read mapping file
   raw_text <- readLines(file_path, warn = FALSE, encoding = "UTF-8")
 

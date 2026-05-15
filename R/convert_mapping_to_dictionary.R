@@ -1,7 +1,3 @@
-# Load necessary library
-library(dplyr)
-library(labelled)
-
 #' Convert a textual mapping definition into a long-format data frame
 #'
 #' Parses a multi-line mapping string of the form used in this package's

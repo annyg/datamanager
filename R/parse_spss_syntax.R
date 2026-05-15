@@ -29,8 +29,6 @@
 #'
 #' @export
 parse_spss_syntax <- function(filepath) {
-  library(stringr)
-
   lines <- readLines(filepath, warn = FALSE, encoding = "UTF-8")
 
   # --- Initialize ---

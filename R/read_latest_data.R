@@ -3,7 +3,7 @@
 #' Locates the most recent dated subdirectory of the form
 #' `<results_directory>_<YYYY-MM-DD>` under `results_directory_location`,
 #' finds the most recent `<results_filename>_<YYYY-MM-DD>.qs` inside it, and
-#' loads it via [qs::qread()]. This is the companion reader for
+#' loads it via [qs2::qs_read()]. This is the companion reader for
 #' [export_results_for_research()] when `write_as_qs = TRUE`.
 #'
 #' @param results_directory_location Character. Path containing the dated
@@ -19,10 +19,11 @@
 #' @seealso [export_results_for_research()].
 #'
 #' @importFrom dplyr mutate arrange slice pull desc
+#' @importFrom magrittr %>%
 #' @importFrom tibble as_tibble
 #' @importFrom stringr str_detect
 #' @importFrom purrr keep
-#' @importFrom qs qread
+#' @importFrom qs2 qs_read
 #'
 #' @examples
 #' \dontrun{
@@ -57,7 +58,7 @@ read_latest_qs <- function(results_directory_location, results_directory, result
 
   # Ensure recent_file is a single string value, or return a message if no file is found
   if (length(recent_file) == 1) {
-    data <- qread(recent_file)
+    data <- qs_read(recent_file)
     return(data)
   } else {
     stop("No suitable file found in specified folder set.")

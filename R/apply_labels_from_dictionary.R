@@ -15,6 +15,7 @@
 #' @importFrom labelled var_label var_label<- val_labels val_labels<-
 #' @importFrom dplyr rename
 #' @importFrom stringr str_match_all str_trim
+#' @importFrom stats setNames
 #' @export
 apply_labels_from_dictionary <- function(data,
                                          dictionary,
@@ -22,9 +23,6 @@ apply_labels_from_dictionary <- function(data,
                                          var_label_col = "var_label",
                                          val_label_col = NULL,
                                          new_var_name_col = NULL) {
-  library(labelled)
-  library(stringr)
-
   # --- Rename variables if new names provided ---
   if (!is.null(new_var_name_col)) {
     rename_map <- setNames(dictionary[[new_var_name_col]], dictionary[[var_name_col]])

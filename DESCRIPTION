@@ -20,13 +20,21 @@ Imports:
     codebookr,
     dplyr,
     DT,
-    haven,
     htmlwidgets,
     labelled,
+    lubridate,
+    magrittr,
+    purrr,
+    qs2,
+    questionr,
     rio,
-    webshot
+    rlang,
+    stringr,
+    tibble,
+    tidyr
 Suggests:
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    webshot
 Depends:
     R (>= 3.5)
 Config/testthat/edition: 3

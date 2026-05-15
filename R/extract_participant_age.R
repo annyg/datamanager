@@ -27,7 +27,6 @@
 #'
 #' @export
 calc_age <- function(socID, refDate = Sys.Date(), unit = "year", cutoff_2000 = 22L) {
-  require(lubridate)
   birthDate <- parse_date_time2(str_sub(str_pad(socID, 11, "left", pad = 0), 0, 6), "dmy", cutoff_2000 = cutoff_2000)
   if (grepl(x = unit, pattern = "year")) {
     as.period(interval(birthDate, refDate), unit = "year")$year
