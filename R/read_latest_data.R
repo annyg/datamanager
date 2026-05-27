@@ -18,6 +18,8 @@
 #'
 #' @seealso [export_results_for_research()].
 #'
+#' @export
+#'
 #' @importFrom dplyr mutate arrange slice pull desc
 #' @importFrom magrittr %>%
 #' @importFrom tibble as_tibble

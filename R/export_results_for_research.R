@@ -43,6 +43,8 @@
 #' @seealso [read_latest_qs()], [create_codebook()],
 #'   [apply_labels_from_dictionary()].
 #'
+#' @export
+#'
 #' @examples
 #' \dontrun{
 #' export_results_for_research(

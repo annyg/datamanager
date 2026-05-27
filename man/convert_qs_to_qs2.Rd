@@ -17,13 +17,15 @@ A character vector (invisibly) of the \code{.qs2} paths that were
 written. Skipped or failed inputs are omitted.
 }
 \description{
-Reads each input \code{.qs} file with \code{\link[qs:qread]{qs::qread()}} and rewrites it next to the
+Reads each input \code{.qs} file with \code{qs::qread()} and rewrites it next to the
 source as \verb{<stem>.qs2} via \code{\link[qs2:qs_save]{qs2::qs_save()}}. The original \code{.qs} file is
 left untouched.
 }
 \details{
-Requires the suggested \code{qs} package (used only for reading the legacy
-format). Install with \code{install.packages("qs")} if missing.
+Requires the legacy \code{qs} package (used only for reading the old format).
+\code{qs} was archived from CRAN on 2026-01-17, so it is no longer a declared
+dependency of this package. If you still have \code{.qs} files to convert,
+install it from the CRAN archive with \code{remotes::install_version("qs")}.
 }
 \examples{
 \dontrun{

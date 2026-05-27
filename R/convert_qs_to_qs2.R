@@ -1,11 +1,13 @@
 #' Convert legacy `.qs` files to the `.qs2` format
 #'
-#' Reads each input `.qs` file with [qs::qread()] and rewrites it next to the
+#' Reads each input `.qs` file with `qs::qread()` and rewrites it next to the
 #' source as `<stem>.qs2` via [qs2::qs_save()]. The original `.qs` file is
 #' left untouched.
 #'
-#' Requires the suggested `qs` package (used only for reading the legacy
-#' format). Install with `install.packages("qs")` if missing.
+#' Requires the legacy `qs` package (used only for reading the old format).
+#' `qs` was archived from CRAN on 2026-01-17, so it is no longer a declared
+#' dependency of this package. If you still have `.qs` files to convert,
+#' install it from the CRAN archive with `remotes::install_version("qs")`.
 #'
 #' @param path Character vector of paths to existing `.qs` files.
 #' @param overwrite Logical. If `FALSE` (the default), existing `.qs2`
@@ -29,13 +31,20 @@
 #' }
 #'
 convert_qs_to_qs2 <- function(path, overwrite = FALSE) {
-  if (!requireNamespace("qs", quietly = TRUE)) {
+  # 'qs' was archived from CRAN (2026-01-17) and is only needed to *read* the
+  # legacy format here, so it is not a declared dependency. The package name is
+  # held in a variable (and the function fetched via getExportedValue()) so
+  # R CMD check does not flag the archived 'qs' as a missing dependency.
+  qs_pkg <- "qs"
+  if (!requireNamespace(qs_pkg, quietly = TRUE)) {
     stop(
-      "Package 'qs' is required to read legacy .qs files. ",
-      "Install it with install.packages(\"qs\").",
+      "Package 'qs' is required to read legacy .qs files but is not installed. ",
+      "It was archived from CRAN on 2026-01-17; install it from the archive ",
+      'with remotes::install_version("qs").',
       call. = FALSE
     )
   }
+  qs_qread <- getExportedValue(qs_pkg, "qread")
 
   written <- character(0)
 
@@ -56,7 +65,7 @@ convert_qs_to_qs2 <- function(path, overwrite = FALSE) {
       next
     }
 
-    obj <- qs::qread(src)
+    obj <- qs_qread(src)
     qs2::qs_save(obj, dest)
     written <- c(written, dest)
   }

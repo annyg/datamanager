@@ -2,7 +2,7 @@ Package: datamanager
 Title: Efficient Management and Scoring of Research Data
 Version: 0.3.0
 Authors@R: c(
-    person("Anders", "Nygaard", , "andersinthis@gmail.com", role = c("aut", "cre"),
+    person(given = c("Anders", "B"), family = "Nygaard", email = "anders@anythings.no", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-1922-0751")),
     person("ANYthings", role = "cph")
   )
@@ -33,7 +33,6 @@ Imports:
     tibble,
     tidyr
 Suggests:
-    qs,
     testthat (>= 3.0.0),
     webshot
 Depends:
