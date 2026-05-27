@@ -33,6 +33,7 @@ Imports:
     tibble,
     tidyr
 Suggests:
+    qs,
     testthat (>= 3.0.0),
     webshot
 Depends:
