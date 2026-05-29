@@ -9,7 +9,7 @@ utils::globalVariables(c(
   "Pain_limited_activities4w", "Relaxed_feeling4w",
   "Energetic_feeling4w", "Depressed_feeling4w",
   "PhysicalAndEmotional_Social4w",
-  "columns_names", "date", "name", "npos", "valfreqs",
+  "columns_names", "date", "is_qs2", "name", "npos", "valfreqs",
   "value", "value_n", "varlabel", "varname", "varname_value",
   "vartype"
 ))
