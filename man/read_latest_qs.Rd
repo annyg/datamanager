@@ -14,18 +14,20 @@ results subdirectories.}
 name (without the trailing \verb{_YYYY-MM-DD}).}
 
 \item{results_filename}{Character. Prefix of the qs file name (without
-the trailing \verb{_YYYY-MM-DD.qs}).}
+the trailing \verb{_YYYY-MM-DD} and the \code{.qs2}/\code{.qs} extension).}
 }
 \value{
-The data frame stored in the most recent matching \code{.qs} file.
-Stops with an error if no matching file is found.
+The data frame stored in the most recent matching \code{.qs2} or \code{.qs}
+file. Stops with an error if no matching file is found.
 }
 \description{
 Locates the most recent dated subdirectory of the form
 \verb{<results_directory>_<YYYY-MM-DD>} under \code{results_directory_location},
-finds the most recent \verb{<results_filename>_<YYYY-MM-DD>.qs} inside it, and
-loads it via \code{\link[qs2:qs_read]{qs2::qs_read()}}. This is the companion reader for
-\code{\link[=export_results_for_research]{export_results_for_research()}} when \code{write_as_qs = TRUE}.
+finds the most recent matching \code{.qs2} or legacy \code{.qs} file inside it, and
+loads it (via \code{\link[qs2:qs_read]{qs2::qs_read()}} for \code{.qs2}, or \code{qs::qread()} for a legacy
+\code{.qs} file). This is the companion reader for \code{\link[=export_results_for_research]{export_results_for_research()}}
+when \code{write_as_qs2 = TRUE} (or the superseded \code{write_as_qs = TRUE}). When
+both formats are present for the same date, the \code{.qs2} file is preferred.
 }
 \examples{
 \dontrun{

@@ -1,5 +1,7 @@
 # datamanager 0.4.0
 * Migrated from the archived `qs` package to `qs2` for serialization; added `convert_qs_to_qs2()` to convert existing `.qs` files.
+* Added a `write_as_qs2` option to `export_results_for_research()` (recommended fast binary format via `qs2::qs_save()`); `write_as_qs` is kept but superseded.
+* `read_latest_qs()` now also discovers `.qs2` files (preferring them over legacy `.qs` on a date tie) and dispatches to `qs2::qs_read()` or `qs::qread()` accordingly.
 * Added redaction options to `create_codebook()` (date-range and free-text detection) and standardized the date range separator to "--".
 
 # datamanager 0.3.0
