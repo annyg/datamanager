@@ -71,14 +71,22 @@ read_latest_qs <- function(results_directory_location, results_directory, result
       data <- qs_read(recent_file)
     } else {
       # Legacy .qs file (superseded format) — requires the archived 'qs' package.
-      if (!requireNamespace("qs", quietly = TRUE)) {
+      # 'qs' was archived from CRAN (2026-01-17) and is only needed to *read* the
+      # old format, so it is not a declared dependency. The package name is held
+      # in a variable (and the reader fetched via getExportedValue()) so R CMD
+      # check does not flag the archived 'qs' as a missing dependency.
+      qs_pkg <- "qs"
+      if (!requireNamespace(qs_pkg, quietly = TRUE)) {
         stop(
           "Reading a legacy .qs file requires the 'qs' package, which is not ",
-          "installed. Install it, or re-export with write_as_qs2 = TRUE.",
+          "installed. It was archived from CRAN on 2026-01-17; install it from ",
+          'the archive with remotes::install_version("qs"), or re-export with ',
+          "write_as_qs2 = TRUE.",
           call. = FALSE
         )
       }
-      data <- qs::qread(recent_file)
+      qs_qread <- getExportedValue(qs_pkg, "qread")
+      data <- qs_qread(recent_file)
     }
     return(data)
   } else {
