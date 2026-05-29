@@ -1,6 +1,6 @@
 Package: datamanager
 Title: Efficient Management and Scoring of Research Data
-Version: 0.3.0
+Version: 0.4.0
 Authors@R: c(
     person(given = c("Anders", "B"), family = "Nygaard", email = "anders@anythings.no", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-1922-0751")),

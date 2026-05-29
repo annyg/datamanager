@@ -1,7 +1,7 @@
 #' Export a labelled data frame in multiple research formats
 #'
-#' Writes the input data frame to one or more file formats (CSV, Excel, qs,
-#' SPSS, Stata, SAS) inside a dated results subdirectory, and optionally
+#' Writes the input data frame to one or more file formats (CSV, Excel, qs2,
+#' qs, SPSS, Stata, SAS) inside a dated results subdirectory, and optionally
 #' generates a data dictionary or a codebook (HTML or Word) alongside the
 #' data file. The companion function [read_latest_qs()] reads the qs output
 #' produced by this function.
@@ -21,7 +21,12 @@
 #' @param write_as_csv Logical. Write a CSV file. Defaults to `TRUE`.
 #' @param write_as_excel Logical. Write an Excel (`.xlsx`) file. Defaults to
 #'   `FALSE`.
-#' @param write_as_qs Logical. Write a `qs` file. Defaults to `FALSE`.
+#' @param write_as_qs2 Logical. Write a `qs2` file via [qs2::qs_save()]. This
+#'   is the recommended fast binary format. Defaults to `FALSE`.
+#' @param write_as_qs *(Superseded)* Logical. Write a legacy `qs` file.
+#'   Superseded by `write_as_qs2`: the `qs` package has been archived from
+#'   CRAN, so this requires `qs` to be installed and is kept only for backward
+#'   compatibility. Defaults to `FALSE`.
 #' @param write_as_spss Logical. Write an SPSS (`.sav`) file. Defaults to
 #'   `FALSE`.
 #' @param write_as_stata Logical. Write a Stata (`.dta`) file. Variables with
@@ -66,6 +71,7 @@ export_results_for_research <- function(
     results_date = Sys.Date(),
     write_as_csv = TRUE,
     write_as_excel = FALSE,
+    write_as_qs2 = FALSE,
     write_as_qs = FALSE,
     write_as_spss = FALSE,
     write_as_stata = FALSE,
@@ -124,7 +130,16 @@ export_results_for_research <- function(
     )
   }
 
-  # If write_as_qs is TRUE, export the data frame as a QS file
+  # If write_as_qs2 is TRUE, export the data frame as a qs2 file (the recommended
+  # fast binary format). Read back with read_latest_qs() / qs2::qs_read().
+  if (write_as_qs2) {
+    qs2::qs_save(df, paste0(results_directory_location, result_directory, result_file, "_qs2.qs2"))
+  }
+
+  # If write_as_qs is TRUE, export the data frame as a legacy QS file.
+  # Lifecycle: superseded by write_as_qs2. The 'qs' package has been archived
+  # from CRAN; this branch is kept for posterity / backward compatibility and
+  # requires 'qs' to be installed.
   if (write_as_qs) {
     rio::export(df, paste0(results_directory_location, result_directory, result_file, "_qs.qs"))
   }

@@ -12,6 +12,7 @@ export_results_for_research(
   results_date = Sys.Date(),
   write_as_csv = TRUE,
   write_as_excel = FALSE,
+  write_as_qs2 = FALSE,
   write_as_qs = FALSE,
   write_as_spss = FALSE,
   write_as_stata = FALSE,
@@ -44,7 +45,13 @@ and file names. Defaults to \code{Sys.Date()}.}
 \item{write_as_excel}{Logical. Write an Excel (\code{.xlsx}) file. Defaults to
 \code{FALSE}.}
 
-\item{write_as_qs}{Logical. Write a \code{qs} file. Defaults to \code{FALSE}.}
+\item{write_as_qs2}{Logical. Write a \code{qs2} file via \code{\link[qs2:qs_save]{qs2::qs_save()}}. This
+is the recommended fast binary format. Defaults to \code{FALSE}.}
+
+\item{write_as_qs}{\emph{(Superseded)} Logical. Write a legacy \code{qs} file.
+Superseded by \code{write_as_qs2}: the \code{qs} package has been archived from
+CRAN, so this requires \code{qs} to be installed and is kept only for backward
+compatibility. Defaults to \code{FALSE}.}
 
 \item{write_as_spss}{Logical. Write an SPSS (\code{.sav}) file. Defaults to
 \code{FALSE}.}
@@ -71,8 +78,8 @@ Called for its side effects (files written to disk). Returns
 \code{NULL} invisibly.
 }
 \description{
-Writes the input data frame to one or more file formats (CSV, Excel, qs,
-SPSS, Stata, SAS) inside a dated results subdirectory, and optionally
+Writes the input data frame to one or more file formats (CSV, Excel, qs2,
+qs, SPSS, Stata, SAS) inside a dated results subdirectory, and optionally
 generates a data dictionary or a codebook (HTML or Word) alongside the
 data file. The companion function \code{\link[=read_latest_qs]{read_latest_qs()}} reads the qs output
 produced by this function.

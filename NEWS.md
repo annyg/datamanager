@@ -1,3 +1,7 @@
+# datamanager 0.4.0
+* Migrated from the archived `qs` package to `qs2` for serialization; added `convert_qs_to_qs2()` to convert existing `.qs` files.
+* Added redaction options to `create_codebook()` (date-range and free-text detection) and standardized the date range separator to "--".
+
 # datamanager 0.3.0
 
 # datamanager 0.2.0
