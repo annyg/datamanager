@@ -14,6 +14,7 @@ export_results_for_research(
   write_as_excel = FALSE,
   write_as_qs2 = FALSE,
   write_as_qs = FALSE,
+  write_as_rds = FALSE,
   write_as_spss = FALSE,
   write_as_stata = FALSE,
   write_as_sas = FALSE,
@@ -52,6 +53,9 @@ is the recommended fast binary format. Defaults to \code{FALSE}.}
 Superseded by \code{write_as_qs2}: the \code{qs} package has been archived from
 CRAN, so this requires \code{qs} to be installed and is kept only for backward
 compatibility. Defaults to \code{FALSE}.}
+
+\item{write_as_rds}{Logical. Write an R native \code{.rds} file via \code{\link[=saveRDS]{saveRDS()}}.
+Defaults to \code{FALSE}.}
 
 \item{write_as_spss}{Logical. Write an SPSS (\code{.sav}) file. Defaults to
 \code{FALSE}.}

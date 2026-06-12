@@ -27,6 +27,8 @@
 #'   Superseded by `write_as_qs2`: the `qs` package has been archived from
 #'   CRAN, so this requires `qs` to be installed and is kept only for backward
 #'   compatibility. Defaults to `FALSE`.
+#' @param write_as_rds Logical. Write an R native `.rds` file via [saveRDS()].
+#'   Defaults to `FALSE`.
 #' @param write_as_spss Logical. Write an SPSS (`.sav`) file. Defaults to
 #'   `FALSE`.
 #' @param write_as_stata Logical. Write a Stata (`.dta`) file. Variables with
@@ -73,6 +75,7 @@ export_results_for_research <- function(
     write_as_excel = FALSE,
     write_as_qs2 = FALSE,
     write_as_qs = FALSE,
+    write_as_rds = FALSE,
     write_as_spss = FALSE,
     write_as_stata = FALSE,
     write_as_sas = FALSE,
@@ -142,6 +145,12 @@ export_results_for_research <- function(
   # requires 'qs' to be installed.
   if (write_as_qs) {
     rio::export(df, paste0(results_directory_location, result_directory, result_file, "_qs.qs"))
+  }
+
+  # If write_as_rds is TRUE, export the data frame as an R native .rds file.
+  # Read back with readRDS().
+  if (write_as_rds) {
+    saveRDS(df, paste0(results_directory_location, result_directory, result_file, ".rds"))
   }
 
   # If write_as_stata is TRUE, export the data frame as a Stata file.

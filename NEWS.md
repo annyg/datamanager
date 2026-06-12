@@ -1,3 +1,7 @@
+# datamanager (development version)
+* Added `convert_qs_to_rds()` to convert `.qs2` (or legacy `.qs`) files to `.rds` via `saveRDS()`.
+* Added a `write_as_rds` option to `export_results_for_research()` to write an R native `.rds` file.
+
 # datamanager 0.4.0
 * Migrated from the archived `qs` package to `qs2` for serialization; added `convert_qs_to_qs2()` to convert existing `.qs` files.
 * Added a `write_as_qs2` option to `export_results_for_research()` (recommended fast binary format via `qs2::qs_save()`); `write_as_qs` is kept but superseded.
