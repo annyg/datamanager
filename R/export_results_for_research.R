@@ -86,8 +86,13 @@ export_results_for_research <- function(
   # and a trailing slash ("/") to create a file path for the results directory
   result_directory <- paste0(results_directory, "_", results_date, "/")
 
-  # Create the result_directory by calling the dir.create() function and passing the result_directory
-  dir.create(result_directory)
+  # Create the output directory. The full path is the caller-supplied
+  # results_directory_location prefix plus the dated result_directory, and must
+  # match the paths used by every write below. recursive = TRUE so a nested
+  # results_directory_location is created too; showWarnings = FALSE so
+  # re-exporting on the same date is not noisy.
+  result_path <- paste0(results_directory_location, result_directory)
+  dir.create(result_path, recursive = TRUE, showWarnings = FALSE)
 
   # Set the result_file by concatenating the results_filename, results_date, and the file extension for each output format
   result_file <- paste0(results_filename, "_", results_date)
@@ -95,12 +100,12 @@ export_results_for_research <- function(
   # Write the results to the specified formats ####
   # If write_as_csv is TRUE, export the data frame as a CSV file
   if (write_as_csv) {
-    rio::export(df, paste0(results_directory_location, result_directory, result_file, ".csv"))
+    rio::export(df, paste0(result_path, result_file, ".csv"))
   }
 
   # If write_as_excel is TRUE, export the data frame as an Excel file
   if (write_as_excel) {
-    rio::export(df, paste0(results_directory_location, result_directory, result_file, "_excel.xlsx"))
+    rio::export(df, paste0(result_path, result_file, "_excel.xlsx"))
   }
 
   # If write_as_spss is TRUE, export the data frame as an SPSS file.
@@ -126,7 +131,7 @@ export_results_for_research <- function(
     }
 
     tryCatch(
-      rio::export(df_spss_export, paste0(results_directory_location, result_directory, result_file, "_spss.sav")),
+      rio::export(df_spss_export, paste0(result_path, result_file, "_spss.sav")),
       error = function(e) {
         warning("Error exporting SPSS file: ", e$message)
       }
@@ -136,7 +141,7 @@ export_results_for_research <- function(
   # If write_as_qs2 is TRUE, export the data frame as a qs2 file (the recommended
   # fast binary format). Read back with read_latest_qs() / qs2::qs_read().
   if (write_as_qs2) {
-    qs2::qs_save(df, paste0(results_directory_location, result_directory, result_file, "_qs2.qs2"))
+    qs2::qs_save(df, paste0(result_path, result_file, "_qs2.qs2"))
   }
 
   # If write_as_qs is TRUE, export the data frame as a legacy QS file.
@@ -144,13 +149,30 @@ export_results_for_research <- function(
   # from CRAN; this branch is kept for posterity / backward compatibility and
   # requires 'qs' to be installed.
   if (write_as_qs) {
-    rio::export(df, paste0(results_directory_location, result_directory, result_file, "_qs.qs"))
+    # Call qs::qsave() directly rather than going through rio: rio dropped .qs
+    # support in 1.3.0 (it errors with "qs format not supported") after 'qs' was
+    # archived from CRAN. 'qs' is therefore not a declared dependency, and the
+    # package name is held in a variable with the writer fetched via
+    # getExportedValue() so R CMD check does not flag the archived package --
+    # the same indirection read_latest_qs() and the converters use.
+    qs_pkg <- "qs"
+    if (!requireNamespace(qs_pkg, quietly = TRUE)) {
+      stop(
+        "Writing a legacy .qs file requires the 'qs' package, which is not ",
+        "installed. It was archived from CRAN on 2026-01-17; install it from ",
+        'the archive with remotes::install_version("qs"), or export with ',
+        "write_as_qs2 = TRUE instead.",
+        call. = FALSE
+      )
+    }
+    qs_qsave <- getExportedValue(qs_pkg, "qsave")
+    qs_qsave(df, paste0(result_path, result_file, "_qs.qs"))
   }
 
   # If write_as_rds is TRUE, export the data frame as an R native .rds file.
   # Read back with readRDS().
   if (write_as_rds) {
-    saveRDS(df, paste0(results_directory_location, result_directory, result_file, ".rds"))
+    saveRDS(df, paste0(result_path, result_file, ".rds"))
   }
 
   # If write_as_stata is TRUE, export the data frame as a Stata file.
@@ -166,7 +188,7 @@ export_results_for_research <- function(
     }
 
     tryCatch(
-      rio::export(df_stata_export, paste0(results_directory_location, result_directory, result_file, "_stata.dta")),
+      rio::export(df_stata_export, paste0(result_path, result_file, "_stata.dta")),
       error = function(e) {
         warning("Error exporting Stata file: ", e$message)
       }
@@ -182,14 +204,14 @@ export_results_for_research <- function(
     # # Get the column names of the data frame
     # cols <- get_column_names(df)
 
-    # Create a codebook using the koRonastudytools package
-    book <- datamanager::create_codebook(df)
+    # Create a codebook (see create_codebook())
+    book <- create_codebook(df)
 
     # Create a datatable from the codebook data frame with filtering and pagination options
     full_codebook_table <- DT::datatable(book, filter = "top", options = list(pageLength = 20))
 
     # Save the datatable as an HTML widget in the result_directory
-    htmlwidgets::saveWidget(full_codebook_table, paste0(results_directory_location, result_directory, "html_codebook_", result_file, ".html"))
+    htmlwidgets::saveWidget(full_codebook_table, paste0(result_path, "html_codebook_", result_file, ".html"))
   }
 
   ## Generate a word document codebook ####
@@ -198,7 +220,7 @@ export_results_for_research <- function(
     bookr <- codebookr::codebook(df)
 
     # Print the codebook document and save it as a Word document in the result_directory
-    print(bookr, paste0(results_directory_location, result_directory, "codebook_", result_file, ".docx"))
+    print(bookr, paste0(result_path, "codebook_", result_file, ".docx"))
   }
 
   ## Generate a data dictionary ####
@@ -207,6 +229,6 @@ export_results_for_research <- function(
     dictionary <- labelled::generate_dictionary(df)
 
     # Export the dictionary as an Excel file in the result_directory
-    rio::export(dictionary, paste0(results_directory_location, result_directory, "dictionary_", result_file, ".xlsx"))
+    rio::export(dictionary, paste0(result_path, "dictionary_", result_file, ".xlsx"))
   }
 }

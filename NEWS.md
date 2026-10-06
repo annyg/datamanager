@@ -1,6 +1,11 @@
 # datamanager (development version)
+
+# datamanager 0.4.1
 * Added `convert_qs_to_rds()` to convert `.qs2` (or legacy `.qs`) files to `.rds` via `saveRDS()`.
 * Added a `write_as_rds` option to `export_results_for_research()` to write an R native `.rds` file.
+* Fixed `export_results_for_research()` creating the dated output directory in the working directory instead of under `results_directory_location`, which made any non-empty `results_directory_location` fail. The directory is now created recursively at the documented path, and every write shares a single `result_path`.
+* `export_results_for_research(write_as_qs = TRUE)` now writes via `qs::qsave()` directly instead of `rio::export()`. `rio` dropped `.qs` support in 1.3.0 (it errors with "qs format not supported"), which left `write_as_qs` broken even when `qs` was installed. The branch also checks for the archived `qs` package up front and errors with an actionable message, matching the legacy readers.
+* `export_results_for_research()` no longer calls `create_codebook()` via `datamanager::`, so the HTML codebook works under `devtools::load_all()`.
 
 # datamanager 0.4.0
 * Migrated from the archived `qs` package to `qs2` for serialization; added `convert_qs_to_qs2()` to convert existing `.qs` files.
