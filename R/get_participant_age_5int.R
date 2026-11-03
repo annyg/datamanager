@@ -14,7 +14,8 @@
 #'   [lubridate::parse_date_time2()]. Defaults to `22L`.
 #'
 #' @return A character vector of 5-year age band labels (e.g. `"25-29 years"`),
-#'   or `NA` if the SocID could not be parsed.
+#'   or `NA` if the SocID could not be parsed or the age is under 18. The bands
+#'   are defined in years, so `unit` should normally be left as `"year"`.
 #'
 #' @seealso [get_participant_age()] for the continuous age in a chosen unit.
 #'
@@ -25,7 +26,7 @@
 #' @export
 get_participant_age_5int <- function(socID, refDate = Sys.Date(), unit = "year", cutoff_2000 = 22L) {
   birthDate <- parse_date_time2(str_sub(str_pad(socID, 11, "left", pad = 0), 0, 6), "dmy", cutoff_2000 = cutoff_2000)
-  if (grepl(x = unit, pattern = "year")) {
+  age <- if (grepl(x = unit, pattern = "year")) {
     as.period(interval(birthDate, refDate), unit = "year")$year
   } else if (grepl(x = unit, pattern = "month")) {
     as.period(interval(birthDate, refDate), unit = "month")$month
@@ -38,16 +39,16 @@ get_participant_age_5int <- function(socID, refDate = Sys.Date(), unit = "year",
     NA
   }
   case_when(
-    between(birthDate, 18, 24) ~ "18-24 years",
-    between(birthDate, 25, 29) ~ "25-29 years",
-    between(birthDate, 30, 34) ~ "30-34 years",
-    between(birthDate, 35, 39) ~ "35-39 years",
-    between(birthDate, 40, 44) ~ "40-44 years",
-    between(birthDate, 45, 49) ~ "45-49 years",
-    between(birthDate, 50, 54) ~ "50-54 years",
-    between(birthDate, 55, 59) ~ "55-59 years",
-    between(birthDate, 60, 64) ~ "60-64 years",
-    between(birthDate, 65, 69) ~ "65-69 years",
-    birthDate >= 70 ~ "70 years +"
+    between(age, 18, 24) ~ "18-24 years",
+    between(age, 25, 29) ~ "25-29 years",
+    between(age, 30, 34) ~ "30-34 years",
+    between(age, 35, 39) ~ "35-39 years",
+    between(age, 40, 44) ~ "40-44 years",
+    between(age, 45, 49) ~ "45-49 years",
+    between(age, 50, 54) ~ "50-54 years",
+    between(age, 55, 59) ~ "55-59 years",
+    between(age, 60, 64) ~ "60-64 years",
+    between(age, 65, 69) ~ "65-69 years",
+    age >= 70 ~ "70 years +"
   )
 }

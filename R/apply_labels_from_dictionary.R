@@ -23,21 +23,26 @@ apply_labels_from_dictionary <- function(data,
                                          var_label_col = "var_label",
                                          val_label_col = NULL,
                                          new_var_name_col = NULL) {
+  lookup_names <- dictionary[[var_name_col]]
+
   # --- Rename variables if new names provided ---
   if (!is.null(new_var_name_col)) {
-    rename_map <- setNames(dictionary[[new_var_name_col]], dictionary[[var_name_col]])
-    rename_map <- rename_map[names(rename_map) %in% names(data)]
+    old_names <- dictionary[[var_name_col]]
+    new_names <- dictionary[[new_var_name_col]]
+    # dplyr::rename() expects `new = old`
+    keep <- !is.na(old_names) & !is.na(new_names) & nzchar(new_names) &
+      old_names %in% names(data)
+    rename_map <- setNames(old_names[keep], new_names[keep])
     data <- dplyr::rename(data, !!!rename_map)
+    # Look up renamed variables by their new name
+    lookup_names[keep] <- new_names[keep]
   }
-
-  # Use new name for lookup if renaming was done
-  lookup_names <- if (!is.null(new_var_name_col)) dictionary[[new_var_name_col]] else dictionary[[var_name_col]]
 
   for (i in seq_len(nrow(dictionary))) {
     var <- lookup_names[i]
 
     # Skip if variable not in dataset
-    if (!var %in% names(data)) next
+    if (is.na(var) || !var %in% names(data)) next
 
     # --- Assign variable label ---
     var_lab <- dictionary[[var_label_col]][i]
@@ -54,11 +59,12 @@ apply_labels_from_dictionary <- function(data,
         if (nrow(parts) > 0) {
           values <- str_trim(parts[, 2])
           labels <- str_trim(parts[, 3])
-          # Convert to numeric if values are numeric
-          if (all(grepl("^\\d+$", values))) {
-            values <- as.integer(values)
+          # Match the type of integer-looking codes to the column type
+          if (is.numeric(data[[var]]) && all(grepl("^-?\\d+$", values))) {
+            values <- if (is.integer(data[[var]])) as.integer(values) else as.numeric(values)
           }
-          val_labels(data[[var]]) <- setNames(labels, values)
+          # labelled expects the values, named by their labels
+          val_labels(data[[var]]) <- setNames(values, labels)
         }
       }
     }

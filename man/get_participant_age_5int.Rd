@@ -26,7 +26,8 @@ left-padded with zeros to 11 characters.}
 }
 \value{
 A character vector of 5-year age band labels (e.g. \code{"25-29 years"}),
-or \code{NA} if the SocID could not be parsed.
+or \code{NA} if the SocID could not be parsed or the age is under 18. The bands
+are defined in years, so \code{unit} should normally be left as \code{"year"}.
 }
 \description{
 Parses a Norwegian Social ID into a birthdate, computes age relative to
