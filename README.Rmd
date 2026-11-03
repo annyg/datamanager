@@ -22,8 +22,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/annyg/datamanager/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/annyg/datamanager/actions/workflows/R-CMD-check.yaml)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14825940 .svg)](https://doi.org/10.5281/zenodo.14825940 )
-[![codecov](https://codecov.io/gh/annyg/datamanager/branch/main/graph/badge.svg)](https://codecov.io/gh/annyg/datamanager)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14825940.svg)](https://doi.org/10.5281/zenodo.14825940)
 ![License:GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-green.svg)
 
 <!-- badges: end -->
@@ -127,7 +126,7 @@ the package help files or vignette.
 
 If you use `datamanager` in your research, please cite it as follows:
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14825940 .svg)](https://doi.org/10.5281/zenodo.14825940 )
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14825940.svg)](https://doi.org/10.5281/zenodo.14825940)
 
 Example BibTeX entry:
 
