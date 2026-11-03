@@ -23,56 +23,29 @@
 #'
 #' @export
 convert_mapping_to_dataframe <- function(mapping_text) {
-  # Split the input by lines and filter out empty lines
-  lines <- strsplit(mapping_text, "\n")[[1]]
-  lines <- lines[lines != ""]
+  parsed <- parse_mapping_text(mapping_text)
 
-  # Create vectors to hold the components of the final dataframe
-  variables <- c()
-  labels <- c()
-  value_labels <- c()
+  variables <- character()
+  labels <- character()
+  value_labels <- character()
 
-  current_variable <- NULL
+  for (var in names(parsed)) {
+    variables <- c(variables, var)
+    labels <- c(labels, parsed[[var]]$label)
+    value_labels <- c(value_labels, NA_character_)
 
-  for (line in lines) {
-    # Check for variable definition
-    if (grepl(":", line)) {
-      # Extract variable name and label
-      parts <- unlist(strsplit(line, ":"))
-      current_variable <- trimws(parts[1])
-      variable_label <- gsub("<-.*", "", parts[1])
-      variable_label <- gsub("'", "", variable_label)
-
-      # Store the variable and its label
-      variables <- c(variables, current_variable)
-      labels <- c(labels, variable_label)
-    }
-
-    # Check for value mapping
-    if (grepl("<-", line) && !is.null(current_variable)) {
-      # Extract value and label
-      parts <- unlist(strsplit(line, "<-"))
-      value_info <- trimws(parts[1])
-      value_label <- gsub(".*=", "", parts[1])
-      value <- trimws(gsub(" =.*", "", value_info))
-      value_label <- gsub("'", "", value_label)
-
-      # Store the variable, label, and value label
-      variables <- c(variables, current_variable)
-      labels <- c(labels, value_label)
-      value_labels <- c(value_labels, value)
-    }
+    values <- parsed[[var]]$values
+    variables <- c(variables, rep(var, length(values)))
+    labels <- c(labels, unlist(values, use.names = FALSE))
+    value_labels <- c(value_labels, names(values))
   }
 
-  # Create a dataframe
-  result_df <- data.frame(
+  data.frame(
     Variable = variables,
     Label = labels,
-    Value_Label = c(value_labels, rep(NA, length(variables) - length(value_labels))), # Fill NA for non-value rows
+    Value_Label = value_labels,
     stringsAsFactors = FALSE
   )
-
-  return(result_df)
 }
 
 #' Convert a textual mapping definition into a nested dictionary
@@ -94,38 +67,42 @@ convert_mapping_to_dataframe <- function(mapping_text) {
 #'
 #' @export
 convert_mapping_to_dictionary <- function(mapping_text) {
-  # Split the input by lines and filter out empty lines
-  lines <- strsplit(mapping_text, "\n")[[1]]
+  parse_mapping_text(mapping_text)
+}
+
+# Shared parser for convert_mapping_to_dataframe() and
+# convert_mapping_to_dictionary(). Uses the same header and value patterns as
+# parse_variable_mapping():
+#   header: name : 'label' [<- TYPE] :: oldname
+#   value:  N = 'label' <- code
+# Lines matching neither pattern are ignored, as are value lines that appear
+# before any header.
+#' @noRd
+parse_mapping_text <- function(mapping_text) {
+  var_pattern <- "^([A-Za-z0-9_]+)\\s*:\\s*'([^']+)'(?:\\s*<-\\s*([A-Z]+))?\\s*::\\s*([A-Za-z0-9_]+)$"
+  val_pattern <- "^\\s*(\\d+)\\s*=\\s*'([^']+)'\\s*<-\\s*([A-Za-z0-9_]+|_)\\s*$"
+
+  lines <- trimws(strsplit(mapping_text, "\n")[[1]])
   lines <- lines[lines != ""]
 
-  # Create a list to hold the dictionaries for each variable
   dict_list <- list()
   current_variable <- NULL
 
   for (line in lines) {
-    # Check for variable definition
-    if (grepl(":", line)) {
-      # Extract variable name and label
-      parts <- unlist(strsplit(line, ":"))
-      current_variable <- trimws(parts[1])
-      variable_label <- gsub("<-.*", "", parts[1])
-      variable_label <- gsub("'", "", variable_label)
-      dict_list[[current_variable]] <- list(label = variable_label, values = list())
+    header <- regmatches(line, regexec(var_pattern, line, perl = TRUE))[[1]]
+    if (length(header) > 0) {
+      current_variable <- header[2]
+      dict_list[[current_variable]] <- list(label = trimws(header[3]), values = list())
+      next
     }
 
-    # Check for value mapping
-    if (grepl("<-", line) && !is.null(current_variable)) {
-      # Extract value and label
-      parts <- unlist(strsplit(line, "<-"))
-      value_info <- trimws(parts[1])
-      value_label <- gsub(".*=", "", parts[1])
-      value <- trimws(gsub(" =.*", "", value_info))
-      value_label <- gsub("'", "", value_label)
-      dict_list[[current_variable]]$values[[value]] <- value_label
+    value <- regmatches(line, regexec(val_pattern, line, perl = TRUE))[[1]]
+    if (length(value) > 0 && !is.null(current_variable)) {
+      dict_list[[current_variable]]$values[[value[2]]] <- trimws(value[3])
     }
   }
 
-  return(dict_list)
+  dict_list
 }
 
 # # Example usage

@@ -1,4 +1,8 @@
 # datamanager (development version)
+* Fixed `get_participant_age_5int()`, which errored on every input because it binned the parsed birthdate instead of the computed age. Ages under 18 return `NA`.
+* Fixed `convert_mapping_to_dictionary()` and `convert_mapping_to_dataframe()`. They now use the same header and value patterns as `parse_variable_mapping()`, so they take the quoted variable label, no longer parse the header line as a value, and trim value labels. `convert_mapping_to_dataframe()` also no longer misaligns values with their rows.
+* Fixed `apply_labels_from_dictionary()`. Value labels were built the wrong way round, which errored for numeric codes and inverted character codes. `new_var_name_col` errored on any input. Integer-like codes now also match double columns, and variables with no new name keep their name and labels.
+* Fixed `parse_spss_syntax()` erroring on files without `VARIABLE LABELS` lines. It now returns an empty table.
 
 # datamanager 0.4.1
 * Added `convert_qs_to_rds()` to convert `.qs2` (or legacy `.qs`) files to `.rds` via `saveRDS()`.

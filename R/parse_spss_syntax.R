@@ -83,7 +83,7 @@ parse_spss_syntax <- function(filepath) {
   }
 
   # --- Add value label summaries to var_table ---
-  var_table$val_labels <- NA_character_
+  var_table$val_labels <- rep(NA_character_, nrow(var_table))
   for (i in seq_len(nrow(var_table))) {
     var <- var_table$var_name[i]
     if (var %in% names(value_labels)) {
