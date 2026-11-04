@@ -9,8 +9,8 @@ Authors@R: c(
 Description: datamanager is an R package designed for the efficient management 
     and scoring of research data, particularly focusing on questionnaire and 
     survey data. It provides a suite of functions to handle common tasks in data 
-    preparation and scoring, including support for instruments such as RAND-12 
-    and EMQ.
+    preparation, labelling, export and scoring, including unweighted RAND-12
+    summary scores.
 License: GPL (>= 3)
 Encoding: UTF-8
 Language: EN
