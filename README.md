@@ -6,7 +6,7 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/annyg/datamanager/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/annyg/datamanager/actions/workflows/R-CMD-check.yaml)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14825940.svg)](https://doi.org/10.5281/zenodo.14825940)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14825939.svg)](https://doi.org/10.5281/zenodo.14825939)
 ![License:GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-green.svg)
 
 <!-- badges: end -->
@@ -14,15 +14,15 @@
 `datamanager` is an R package designed for the efficient management and
 scoring of research data, particularly focusing on questionnaire and
 survey data. It provides a suite of functions to handle common tasks in
-data preparation and scoring, including support for instruments such as
-RAND-12 and EMQ.
+data preparation, labelling, export and scoring, including unweighted
+RAND-12 summary scores.
 
 ## Features
 
 - **Data Management**: Effortlessly clean and organize questionnaire
   data.
-- **Scoring Functions**: Compute scores for recognized instruments
-  including RAND-12 and EMQ.
+- **Scoring Functions**: Compute scores for recognized instruments such
+  as RAND-12 (unweighted PCS and MCS).
 - **Efficient Workflow**: Streamline your data processing tasks in
   research settings.
 
@@ -92,36 +92,28 @@ how to use the main functions in `datamanager`.
 
 ``` r
 # Example for scoring RAND-12
-# rand12_scores <- score_rand12(cleaned_data)
-```
-
-#### EMQ Scoring
-
-``` r
-# Example for scoring EMQ
-# emq_scores <- score_emq(cleaned_data)
+# rand12_scores <- scoring_rand12_unweighted(cleaned_data)
 ```
 
 For detailed documentation on these functions and more, please refer to
-the package help files or vignette.
+the package help files (e.g. `?scoring_rand12_unweighted`).
 
 ## Citation
 
 If you use `datamanager` in your research, please cite it as follows:
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14825940.svg)](https://doi.org/10.5281/zenodo.14825940)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14825939.svg)](https://doi.org/10.5281/zenodo.14825939)
 
 Example BibTeX entry:
 
 ``` bibtex
-@software{Anders B. Nygaard_2023_XXXXXXX,
+@software{Nygaard_datamanager,
   author       = {Anders B. Nygaard},
-  title        = {datamanager: Tools for Questionnaire and Survey Data Management},
-  year         = {2025},
+  title        = {datamanager: Efficient Management and Scoring of Research Data},
+  year         = {2026},
   publisher    = {GitHub},
-  journal      = {GitHub repository},
-  version      = {v1.0.0},
-  doi          = {10.5281/zenodo.14825940},
+  version      = {0.5.0},
+  doi          = {10.5281/zenodo.14825939},
   url          = {https://github.com/annyg/datamanager}
 }
 ```
