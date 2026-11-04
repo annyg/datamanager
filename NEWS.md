@@ -1,4 +1,4 @@
-# datamanager (development version)
+# datamanager 0.5.0
 * Hardened `prep_email()`. Provider typo fixes now only apply to the domain (e.g. `gmalmberg@uio.no` is no longer rewritten), the `.vom` fix no longer matches arbitrary characters (`user@gravom.no` was turned into `user@gr.com.no`), runs of dots are fully collapsed, and fixes are case-insensitive so they also work with `lowercase = FALSE`. `fix_spelling = TRUE` now also fixes ending typos such as `.con`, `,com` and `-no`, collapses `@@`, and adds `.com` to major providers without an ending.
 * `prep_email()` now always removes invisible characters, normalises full-width characters such as `＠`, unwraps `Name <a@b.no>` and `mailto:`, trims stray quotes and punctuation, and turns empty strings into `NA`. It accepts factors and errors on non-character input.
 * Added an `invalid` argument to `prep_email()` (`"keep"`, `"warn"` or `"na"`) to warn about or drop addresses that still look invalid after cleaning. The default `"keep"` matches previous behaviour.
