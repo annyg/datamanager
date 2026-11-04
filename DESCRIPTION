@@ -29,6 +29,7 @@ Imports:
     questionr,
     rio,
     rlang,
+    stringi,
     stringr,
     tibble,
     tidyr

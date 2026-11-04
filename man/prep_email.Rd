@@ -4,39 +4,90 @@
 \alias{prep_email}
 \title{Preprocess and Clean Email Addresses}
 \usage{
-prep_email(email, remove_spaces = TRUE, lowercase = TRUE, fix_spelling = FALSE)
+prep_email(
+  email,
+  remove_spaces = TRUE,
+  lowercase = TRUE,
+  fix_spelling = FALSE,
+  invalid = c("keep", "warn", "na")
+)
 }
 \arguments{
-\item{email}{A character vector containing email addresses to be processed.}
+\item{email}{A character vector (or factor) containing email addresses to
+be processed.}
 
-\item{remove_spaces}{Logical, default is \code{TRUE}. If \code{TRUE}, extraneous spaces within the email will be removed.}
+\item{remove_spaces}{Logical, default is \code{TRUE}. If \code{TRUE}, all whitespace
+within the email will be removed. Leading and trailing whitespace is
+always removed.}
 
-\item{lowercase}{Logical, default is \code{TRUE}. If \code{TRUE}, converts the entire email address to lowercase.}
+\item{lowercase}{Logical, default is \code{TRUE}. If \code{TRUE}, converts the entire
+email address to lowercase.}
 
-\item{fix_spelling}{Logical, default is \code{FALSE}. If \code{TRUE}, corrects common misspellings in domain names and handles some punctuation issues.
+\item{fix_spelling}{Logical, default is \code{FALSE}. If \code{TRUE}, corrects common
+misspellings in domain names and punctuation issues. Corrections are
+anchored to the domain part of the address (the local part before \code{@} is
+never altered by provider typo fixes) and are case-insensitive.}
 
-Common corrections include:
+\item{invalid}{What to do with addresses that do not match a basic email
+pattern after cleaning. One of:
 \itemize{
-\item Replacing \code{gamil}, \code{gmal} with \code{gmail}
-\item Replacing \code{yaoo}, \code{yahou}, \code{yahooo} with \code{yahoo}
-\item Replacing \code{hotnail}, \code{homail}, \code{hotmial} with \code{hotmail}
-\item Fixing \code{.vom} to \code{.com} and addressing double periods
+\item \code{"keep"} (default): return them unchanged.
+\item \code{"warn"}: return them unchanged, but emit a warning with a count and
+a few examples.
+\item \code{"na"}: replace them with \code{NA}.
 }}
 }
 \value{
-A character vector with preprocessed and cleaned email addresses.
+A character vector with preprocessed and cleaned email addresses,
+the same length as \code{email}.
 }
 \description{
-This function preprocesses email addresses by cleaning and correcting them. It removes extra spaces, converts text to lowercase, and fixes common spelling errors typically found in domain names.
+This function preprocesses email addresses by cleaning and correcting them.
+It strips invisible characters and common wrappers (e.g. \verb{mailto:} or
+\verb{Name <user@example.com>}), removes extra spaces, converts text to
+lowercase, optionally fixes common spelling errors in the domain, and can
+flag or drop addresses that still do not look valid after cleaning.
+}
+\details{
+The following cleaning is always applied:
+\itemize{
+\item Unicode compatibility normalisation (NFKC), so e.g. a full-width \verb{＠}
+becomes \code{@}.
+\item Removal of invisible format characters such as zero-width spaces.
+\item Extraction of the address from \verb{Name <user@example.com>} and removal of
+a \verb{mailto:} prefix, surrounding quotes and stray leading/trailing
+punctuation.
+\item Empty strings become \code{NA}.
+}
+
+When \code{fix_spelling = TRUE}, the following corrections are applied:
+\itemize{
+\item Removing parentheses and collapsing repeated \code{@} (\code{@} -> \code{@}).
+\item Ending typos: \code{.con}, \code{.vom}, \code{.cmo}, \verb{,com}, \code{-com}, ... -> \code{.com};
+\code{.noo}/\code{.nno} -> \code{.no}; \code{.ogr}/\code{.og} -> \code{.org}; a comma or hyphen
+before the final ending -> \code{.}.
+\item Provider typos directly after \code{@}: \code{gamil}, \code{gmal}, ... -> \code{gmail};
+\code{yaoo}, \code{yahou}, ... -> \code{yahoo}; \code{hotnail}, \code{homail}, ... -> \code{hotmail};
+\code{outlok}, ... -> \code{outlook}; \code{mailcom} -> \code{mail.com}.
+\item Adding \code{.com} when a major provider lacks an ending (\code{user@gmail}).
+\item Collapsing repeated dots and removing dots at the start/end of the
+address and next to \code{@}.
+}
+
+An address is considered valid when it has exactly one \code{@}, a local part
+made of letters, digits and \verb{._\%+'-} without leading, trailing or
+repeated dots, and a domain with at least one dot and a final ending of
+two or more letters.
 }
 \examples{
 prep_email(" Example.email @gamil.com ", TRUE, TRUE, TRUE)
 prep_email("user@homail.com", fix_spelling = TRUE)
+prep_email("Ola Nordmann <ola@hotmail,com>", fix_spelling = TRUE)
+prep_email(c("ok@example.com", "not-an-email"), invalid = "na")
 
 }
 \seealso{
-\code{\link[=check_email_syntax]{check_email_syntax()}} for a more comprehensive checker that
-anchors corrections to the domain portion and can return flags, reasons,
-corrected addresses, or a correction log; and \code{\link[=clean_and_recheck_email]{clean_and_recheck_email()}}
-for the data-frame-level wrapper.
+\code{\link[=check_email_syntax]{check_email_syntax()}} for a checker that can return flags,
+reasons, corrected addresses, or a correction log; and
+\code{\link[=clean_and_recheck_email]{clean_and_recheck_email()}} for the data-frame-level wrapper.
 }
